@@ -1,0 +1,194 @@
+<style>
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  #startBtn,
+  #stopBtn {
+    margin-top: 10px;
+    width: 100px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #startBtn:hover,
+  #stopBtn:hover {
+    background-color: #45a049;
+  }
+
+  #labyrinthe td {
+    width: 10px;
+  }
+
+  #labyrinthe img {
+    width: 35px;
+    height: 35px;
+  }
+
+  #labyrinthe {
+    background-color: #6B8E23;
+  }
+
+  .labyrinthe-container {
+    margin-right: 20px;
+  }
+
+  .section-container {
+    background-color: #9ACD32;
+    border-radius: 5px;
+  }
+
+  section {
+    background-color: #9ACD32;
+    border-radius: 5px;
+  }
+
+  h1,
+  p {
+    text-align: center;
+  }
+</style>
+
+<h1> Projet Fourmis </h1>
+<p> Réalisé par SALAÜN Kerrian & ESCLAPEZ Loïc </p>
+<section class="container-fluid content section-container">
+
+  <section class="container-fluid content">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="success text-center"></div>
+        <p class="errors alert-danger text-center"></p>
+      </div>
+
+      <div class="labyrinthe-container">
+        <table id="labyrinthe">
+        </table>
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; margin-top: 10px;">
+      <div id="timer">00:00</div>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+      <button type="button" id="startBtn" onclick="toggleCounter()">Start</button>
+      <button type="button" id="stopBtn" style="display: none;" onclick="stopCounter()">Stop</button>
+      <button type="button" id="resumeBtn" style="display: none;" onclick="resumeCounter()">Reprendre</button>
+      <div id="counter"></div>
+    </div>
+
+  </section>
+</section>
+
+<script>
+  var counterValue = 0;
+  var intervalId;
+
+  function toggleCounter() {
+    if (intervalId) {
+      stopCounter();
+      document.getElementById("startBtn").style.display = "none";
+      document.getElementById("stopBtn").style.display = "none";
+      document.getElementById("resumeBtn").style.display = "inline-block";
+    } else {
+      startCounter();
+      document.getElementById("startBtn").style.display = "none";
+      document.getElementById("stopBtn").style.display = "inline-block";
+      document.getElementById("resumeBtn").style.display = "none";
+    }
+  }
+
+  function startCounter() {
+    counterValue = 0;
+    updateCounter();
+
+    intervalId = setInterval(function () {
+      counterValue++;
+      updateCounter();
+    }, 1000);
+  }
+
+  function stopCounter() {
+    clearInterval(intervalId);
+    intervalId = null;
+  }
+
+  function resumeCounter() {
+    startCounter();
+  }
+
+  function updateCounter() {
+    var minutes = Math.floor(counterValue / 60);
+    var seconds = counterValue % 60;
+
+    document.getElementById("counter").innerText = formatTime(minutes, seconds);
+    document.getElementById("timer").innerText = formatTime(minutes, seconds);
+  }
+
+  function formatTime(minutes, seconds) {
+    return (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+  }
+
+  window.addEventListener("load", function () {
+    var Map = {
+      init: function (grid, pos, skills) {
+        this.grid = [
+          [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          [1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1],
+          [1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1],
+          [1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1],
+          [1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1],
+          [1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+          [1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1],
+          [1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1],
+          [1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+          [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1],
+          [1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1],
+          [1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1],
+          [1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1],
+          [1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1],
+          [1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1],
+          [1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1],
+          [1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1],
+          [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        ];
+
+        this.pos = [1, 1];
+        this.skills = 0;
+      },
+
+      display: function () {
+        // Ajouter une condition pour vérifier si le labyrinthe est déjà affiché
+        if (document.getElementById("labyrinthe").innerHTML.trim() === "") {
+          for (var y = 0; y < this.grid.length; y++) {
+            var row = "<tr>";
+
+            for (var x = 0; x < this.grid[y].length; x++) {
+              if (this.grid[y][x] === 1) {
+                row += '<td><img src="images/tt.png" alt="tree"></td>';
+              } else {
+                row += "<td></td>";
+              }
+            }
+            document
+              .getElementById("labyrinthe")
+              .insertAdjacentHTML("beforeEnd", row);
+          }
+        }
+      }
+    };
+
+    var labyrinthe = Object.create(Map);
+    labyrinthe.init(18, 18, 3);
+    labyrinthe.display();
+  });
+
+</script>
