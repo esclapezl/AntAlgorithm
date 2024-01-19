@@ -39,7 +39,7 @@ class Map {
 
                 if(fourmi.carrying === 1){
                     if(grid[fourmi.location.x][fourmi.location.y].GetType() === "Start"){
-                        fourmi.pickUp();
+                        fourmi.dropOff();
                     }
                 }
                 else{
