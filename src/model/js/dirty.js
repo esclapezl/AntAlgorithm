@@ -82,7 +82,7 @@ window.addEventListener("load", function () {
 
                     for (var x = 0; x < this.grid[y].length; x++) {
                         if (this.grid[y][x] === 1) {
-                            row += '<td><img src="../../ressources/images/tt.png" alt="tree"></td>';
+                            row += '<td><img src="../../../ressources/images/tt.png" alt="tree"></td>';
                         } else {
                             row += "<td></td>";
                         }
