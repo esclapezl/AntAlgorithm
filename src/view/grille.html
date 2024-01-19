@@ -1,9 +1,10 @@
+<!DOCTYPE html>
+<html lang="fr">
 
 <head>
   <meta charset="utf-8">
   <title>Projet Fourmis</title>
   <link href="../../ressources/css/style.css" rel="stylesheet">
-  <script src="../model/js/dirty.js"></script>
 </head>
 
 <body>
@@ -28,7 +29,7 @@
         </div>
 
         <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
-          <button type="button" id="startBtn" onclick="toggleCounter()">Start</button>
+          <button type="button" id="startBtn">Start</button>
           <button type="button" id="stopBtn" style="display: none;" onclick="stopCounter()">Stop</button>
           <button type="button" id="resumeBtn" style="display: none;" onclick="resumeCounter()">Reprendre</button>
           <div id="counter"></div>
@@ -36,4 +37,8 @@
 
       </section>
   </section>
+
+  <script src="../model/js/Chargement.js"></script>
+  <script src="../model/js/LabyrintheMap.js"></script>
+  <script src="../model/js/main.js"></script>
 </body>
