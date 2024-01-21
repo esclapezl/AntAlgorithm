@@ -1,4 +1,4 @@
-class fourmi {
+class Fourmi {
     constructor(startingPoint) {
         this.location = startingPoint;
         this.capacity = 10; // Capacité de charge limitée
