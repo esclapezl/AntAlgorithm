@@ -11,3 +11,4 @@ let antsCanvas = document.getElementById('ants-canvas');
 let antsCtx = antsCanvas.getContext('2d');
 let antLayer = new AntLayer(antsCanvas, antsCtx);
 antLayer.init(width, height);
+antLayer.display();

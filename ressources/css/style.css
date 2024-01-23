@@ -69,8 +69,8 @@ p {
 
 #trees-canvas, #ants-canvas {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: -250px;
+    left: -250px;
 }
 
 
