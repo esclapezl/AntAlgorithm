@@ -1,49 +1,40 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-<head>
-  <meta charset="utf-8">
-  <title>Projet Fourmis</title>
-  <link href="../../ressources/css/style.css" rel="stylesheet">
-</head>
+  <head>
+    <meta charset="utf-8">
+    <title>Projet Fourmis</title>
+    <link href="../../ressources/css/style.css" rel="stylesheet">
+    <script src="TreeLayer.js"></script>
+    <script src="View.js"></script>
+  </head>
 
-<body>
-  <h1> Projet Fourmis </h1>
-  <p> Réalisé par SALAÜN Kerrian & ESCLAPEZ Loïc </p>
-  <section class="container-fluid content section-container">
-      <section class="container-fluid content">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="success text-center"></div>
-            <p class="errors alert-danger text-center"></p>
-          </div>
+  <body>
+      <section class="container-fluid content section-container">
+              <div id="canvas-container">
+                  <canvas id="trees-canvas"></canvas>
+                  <canvas id="ants-canvas"></canvas>
+              </div>
 
-          <div class="labyrinthe-container">
-            <table id="labyrinthe">
-            </table>
-          </div>
-        </div>
-        <div id="canvas-container">
-          <canvas id="trees-canvas"></canvas>
-          <canvas id="ants-canvas"></canvas>
-        </div>
-        <div style="display: flex; justify-content: center; margin-top: 10px;">
-          <div id="timer">00:00</div>
-        </div>
+              <div id="StartGame">
+                  <div>
+                      <div id="timer">00:00</div>
+                  </div>
 
-        <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
-          <button type="button" id="startBtn">Start</button>
-          <button type="button" id="stopBtn" style="display: none;" onclick="stopCounter()">Stop</button>
-          <button type="button" id="resumeBtn" style="display: none;" onclick="resumeCounter()">Reprendre</button>
-          <div id="counter"></div>
-        </div>
+                  <div id="ant_image">
+                      <img src="../../ressources/images/Antgame.png">
+                  </div>
 
+                  <div>
+                      <button type="button" id="startBtn">Start</button>
+                      <button type="button" id="stopBtn"  onclick="stopCounter()">Stop</button>
+                      <button type="button" id="resumeBtn" onclick="resumeCounter()">Reprendre</button>
+                  </div>
+
+                  <div>
+                      <button type="button" id="pheromonesBtn">Active phéromones</button>
+                  </div>
+              </div>
       </section>
-  </section>
-
-  <script defer src="../model/js/Chargement.js"></script>
-  <script defer src="../model/js/TreeLayer.js"></script>
-  <script defer src="../model/js/AntLayer.js"></script>
-  <script defer src="../model/Fourmi.js"></script>
-  <script defer src="../controller/controller.js"></script>
-</body>
+  </body>
+</html>

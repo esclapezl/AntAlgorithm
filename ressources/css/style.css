@@ -1,13 +1,11 @@
 .content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     height: 100vh;
 }
 
-#startBtn,
-#stopBtn {
+#startBtn, #stopBtn, #resumeBtn, #pheromonesBtn{
     margin-top: 10px;
     width: 100px;
     padding: 10px;
@@ -18,9 +16,26 @@
     cursor: pointer;
 }
 
+#startBtn {
+    margin-left: -800px;
+}
+
+#stopBtn {
+    margin-left: 20px;
+}
+
+#resumeBtn {
+    margin-left: 20px;
+}
+
+#pheromonesBtn {
+    margin-left: -800px;
+    width: 348px;
+}
+
 #startBtn:hover,
-#stopBtn:hover {
-    background-color: #45a049;
+#stopBtn:hover, #resumeBtn:hover, #pheromonesBtn:hover {
+    background-color: yellowgreen;
 }
 
 #labyrinthe td {
@@ -41,7 +56,7 @@
 }
 
 .section-container {
-    background-color: #9ACD32;
+    background-color: darkgray;
     border-radius: 5px;
 }
 
@@ -58,19 +73,45 @@ p {
 #timer {
     font-size: 36px;
     text-align: center;
-    border: 2px solid #333;
-    padding: 10px;
-    margin: 20px auto 0;
+    padding: 5px 10px;
+    margin-left: -1300px;
 }
 
 #canvas-container {
     position: relative;
 }
 
-#trees-canvas, #ants-canvas {
+#trees-canvas {
     position: absolute;
-    top: -250px;
-    left: -250px;
+    top: 80px;
+    left: -150px;
+    background-color: #445600;
+    border-radius: 10px;
+}
+
+#ant_image img {
+    width: 350px;
+    height: auto;
+    margin-left: -800px;
+}
+
+#logo_labyrinthe img {
+    width: 300px;
+    height: auto;
+    margin-left: -800px;
+}
+
+.banner-text {
+    flex-grow: 1;
+}
+
+.banner-text h1, .banner-text p {
+    margin: 0;
+}
+
+#StartGame {
+    border-radius: 30px;
+    padding: 10px; /* Ajoutez un peu de marge intérieure si nécessaire */
 }
 
 
