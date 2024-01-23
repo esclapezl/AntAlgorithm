@@ -1,10 +1,12 @@
 class Fourmi {
-    constructor(startingPoint) {
-        this.location = startingPoint;
+    constructor(x,y) {
+        this.x = x;
+        this.y = y;
         this.capacity = 10; // Capacité de charge limitée
         this.carrying = 0; // Quantité actuellement transportée
         this.path = []; // Chemin depuis le dernier point de départ
         this.memory = {}; // Mémorisation des objectifs
+        this.direction = 0; //0:left 1:up 2:right 3:down
     }
 
 
@@ -48,14 +50,14 @@ class Fourmi {
             // add more directions if needed
         ];
         directions.forEach(direction => {
-            let newX = this.location.x + direction.dx;
-            let newY = this.location.y + direction.dy;
+            let newX = this.x + direction.dx;
+            let newY = this.y + direction.dy;
             if (newX >= 0
-                && newX < grid[0].length
+                && newX < labyrinthe.grid[0].length
                 && newY >= 0
-                && newY < grid.length
-                && grid[newY][newX].GetType() === "Free") {
-                possibilites.push(grid[newY][newX]);
+                && newY < labyrinthe.grid.length
+                && labyrinthe.grid[newY][newX] === 0) {          /*.GetType() === "Free") {*/
+                possibilites.push({newY ,newX});
             }
         });
         return possibilites;
@@ -63,23 +65,38 @@ class Fourmi {
 
     chose(possibilites) {
         let inexplorees = possibilites.filter(location => !this.path.includes(location));
-
         if (inexplorees.length > 0) {
             let choix = inexplorees[Math.floor(Math.random() * inexplorees.length)];
             this.path.push(choix);
+            return choix;
         } else {
             let choix = possibilites[Math.floor(Math.random() * possibilites.length)];
             this.path.push(choix);
+            return choix;
         }
-        return choix;
     }
-    move(location) {
-
-        this.element.style.transform = `translate(${this.x}px, ${this.y}px)`;
-        if (fourmi.carrying === 1 && grid[fourmi.location.x][fourmi.location.y].GetType() === "Start") {
-            fourmi.dropOff();
-        } else if (grid[fourmi.location.x][fourmi.location.y].GetType() === "Objective") {
-            fourmi.pickUp();
+    move(position) {
+        if(this.x === position.newX){
+            if(this.y > position.newY){
+                this.direction = 1;
+            }else{
+                this.direction = 3;
+            }
         }
+        if(this.y === position.newY){
+            if(this.x > position.newX){
+                this.direction = 0;
+            }else{
+                this.direction = 2;
+            }
+        }
+        this.x = position.newX;
+        this.y = position.newY
+        console.log(this.x + " : " + this.y);
+        // if (this.carrying === 1 && labyrinthe.grid[this.x][this.y] === 2){ /*.GetType() === "Start") {*/
+        //     //this.dropOff();
+        // } else if (labyrinthe.grid[this.x][this.y] === 3){ /*.GetType() === "Objective") {*/
+        //     //this.pickUp();
+        // }
     }
 }
