@@ -45,6 +45,7 @@ class TreeLayer {
         for (let i = 0; i < this.grid.length; i++) {
             for (let j = 0; j < this.grid[0].length; j++) {
                 if (this.grid[i][j] === 1) {
+                    // Afficher l'image de l'arbre
                     this.ctx.save();
                     this.ctx.translate(j * cellWidth, i * cellHeight);
                     this.ctx.drawImage(this.treeImage, 0, 0, cellWidth, cellHeight);
@@ -58,8 +59,19 @@ class TreeLayer {
                     newTreeImage.onload = () => {
                         this.ctx.drawImage(newTreeImage, newX, newY, cellWidth, cellHeight);
                     };
+                }else if (this.grid[i][j] === 0) {
+                    // Instancie une cellule Free à la place de 0
+                    const freeCell = new Free(j * cellWidth, i * cellHeight, 3);
+                    this.displayCell(freeCell);
                 }
             }
+        }
+    }
+
+    displayCell(cell) {
+        console.log(`Cell at (${cell.x}, ${cell.y}) created with type: ${cell.GetType()}`);
+        if (cell instanceof Free) {
+            console.log(`Quantity: ${cell.GetQty()}`);
         }
     }
 
