@@ -23,8 +23,6 @@ class View {
 
     drawAnts (fourmis){
         for (let fourmi of fourmis) {
-            fourmi.move(fourmi.chose(fourmi.scanArea(app.grid)));
-
             app.view.antsCtx.save(); // sauvegarde l'état actuel du canvas
             app.view.antsCtx.translate(fourmi.x * fourmi.step + app.view.antLayer.antImage.width / 2, fourmi.y * fourmi.step + app.view.antLayer.antImage.height / 2); // déplace l'origine du canvas à la position de la fourmi
 
@@ -45,6 +43,14 @@ class View {
                 app.view.antLayer.antImage.width * fourmi.size,
                 app.view.antLayer.antImage.height * fourmi.size
             ); // dessine l'image de la fourmi centrée sur l'origine du canvas
+
+            if (fourmi.carrying > 0) {
+                app.view.antsCtx.beginPath();
+                app.view.antsCtx.arc(0, 0, fourmi.size * 10, 0, 2 * Math.PI, false); // draw a circle
+                app.view.antsCtx.fillStyle = 'yellow'; // set the fill color
+                app.view.antsCtx.fill(); // fill the circle
+            }
+
             app.view.antsCtx.restore(); // restaure l'état précédent du canvas
         }
     }

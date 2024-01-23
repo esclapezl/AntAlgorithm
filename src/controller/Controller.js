@@ -57,6 +57,8 @@ const app = new Controller(new Model(), new View());
 
 let fourmis = [];
 let tickDuration = 500;
+let transition = 10;
+
 window.addEventListener('keydown', (event) => {
     if (event.key === 'f') {
         let fourmi = new Fourmi(10,10);
@@ -67,5 +69,15 @@ window.addEventListener('keydown', (event) => {
 
 setInterval(() => {
     app.view.antsCtx.clearRect(0, 0, app.view.antsCanvas.width, app.view.antsCanvas.height); // clear the canvas
-   app.view.drawAnts(fourmis);
+    for (let fourmi of fourmis) {
+        fourmi.move(fourmi.chose(fourmi.scanArea(app.grid)));
+    }
+    app.view.drawAnts(fourmis);
 }, tickDuration);
+
+// setInterval(() => {
+//     for (let fourmi of fourmis) {
+//         fourmi.transition(transition);
+//     }
+//     app.view.drawAnts(fourmis);
+// }, tickDuration/transition);

@@ -13,21 +13,18 @@ class Fourmi {
         this.direction = 0; //0:left 1:up 2:right 3:down
     }
 
-    pickUp(goal) {
+    pickUp(goalCell) {
         if (this.carrying < this.capacity) {
-            let amount = Math.min(this.capacity - this.carrying, goal.quantity);
+            let amount = Math.min(this.capacity - this.carrying, goalCell._qty);
             this.carrying += amount;
-            goal.quantity -= amount;
-            this.path.push(goal.location);
+            goalCell._qty -= amount;
         }
     }
 
     // Déposer un objectif au point de départ
     dropOff(startingPoint) {
-        if (this.location === startingPoint) {
-            this.carrying = 0;
-            this.path = [];
-        }
+        this.carrying = 0;
+        this.path = [];
     }
 
     // Communiquer avec d'autres fourmis
@@ -73,28 +70,45 @@ class Fourmi {
             return choix;
         }
     }
-    move(position) {
-        if(this.targetX === position.newX){
-            if(this.targetY > position.newY){
+    move(cell) {
+        if(this.x === cell.x){
+            if(this.y > cell.y){
                 this.direction = 1;
             }else{
                 this.direction = 3;
             }
         }
-        if(this.targetY === position.newY){
-            if(this.targetX > position.newX){
+        if(this.y === cell.y){
+            if(this.x > cell.x){
                 this.direction = 0;
             }else{
                 this.direction = 2;
             }
         }
-        this.targetX = position.newX;
-        this.targetY = position.newY
+        this.x = cell.x;
+        this.y = cell.y;
 
-        // if (this.carrying === 1 && labyrinthe.grid[this.x][this.y] === 2){ /*.GetType() === "Start") {*/
-        //     //this.dropOff();
-        // } else if (labyrinthe.grid[this.x][this.y] === 3){ /*.GetType() === "Objective") {*/
-        //     //this.pickUp();
-        // }
+        if (this.carrying === 1 && cell.GetType() === "Start") {
+            this.dropOff();
+        } else if (this.carrying === 0 && cell.GetType() === "Objective") {
+            this.pickUp();
+        }
+    }
+
+    transition(transition){
+        switch(this.direction) {
+            case 0: // left
+                this.x -= this.step / transition;
+                break;
+            case 1: // up
+                this.y -= this.step / transition;
+                break;
+            case 2: // right
+                this.x += this.step / transition;
+                break;
+            case 3: // down
+                this.y += this.step / transition;
+                break;
+        }
     }
 }
