@@ -53,10 +53,10 @@ class Fourmi {
             let newX = this.x + direction.dx;
             let newY = this.y + direction.dy;
             if (newX >= 0
-                && newX < labyrinthe.grid[0].length
+                && newX < treeLayer.grid[0].length
                 && newY >= 0
-                && newY < labyrinthe.grid.length
-                && labyrinthe.grid[newY][newX] === 0) {          /*.GetType() === "Free") {*/
+                && newY < treeLayer.grid.length
+                && treeLayer.grid[newY][newX] === 0) {          /*.GetType() === "Free") {*/
                 possibilites.push({newY ,newX});
             }
         });
@@ -92,7 +92,6 @@ class Fourmi {
         }
         this.x = position.newX;
         this.y = position.newY
-        console.log(this.x + " : " + this.y);
         // if (this.carrying === 1 && labyrinthe.grid[this.x][this.y] === 2){ /*.GetType() === "Start") {*/
         //     //this.dropOff();
         // } else if (labyrinthe.grid[this.x][this.y] === 3){ /*.GetType() === "Objective") {*/

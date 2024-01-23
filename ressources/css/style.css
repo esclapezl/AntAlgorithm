@@ -63,9 +63,14 @@ p {
     margin: 20px auto 0;
 }
 
-.labyrinthe-container {
-    text-align: center;
-    margin-top: 20px;
+#canvas-container {
+    position: relative;
+}
+
+#trees-canvas, #ants-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 
