@@ -2,8 +2,10 @@ class Fourmi {
     constructor(x,y) {
         this.x = x;
         this.y = y;
-        this.step = 100;
-        this.size = 10;
+        this.targetX = x;
+        this.targetY = y;
+        this.step = 20;
+        this.size = 0.5;
         this.capacity = 10; // Capacité de charge limitée
         this.carrying = 0; // Quantité actuellement transportée
         this.path = []; // Chemin depuis le dernier point de départ
@@ -72,22 +74,22 @@ class Fourmi {
         }
     }
     move(position) {
-        if(this.x === position.newX){
-            if(this.y > position.newY){
+        if(this.targetX === position.newX){
+            if(this.targetY > position.newY){
                 this.direction = 1;
             }else{
                 this.direction = 3;
             }
         }
-        if(this.y === position.newY){
-            if(this.x > position.newX){
+        if(this.targetY === position.newY){
+            if(this.targetX > position.newX){
                 this.direction = 0;
             }else{
                 this.direction = 2;
             }
         }
-        this.x = position.newX;
-        this.y = position.newY
+        this.targetX = position.newX;
+        this.targetY = position.newY
 
         // if (this.carrying === 1 && labyrinthe.grid[this.x][this.y] === 2){ /*.GetType() === "Start") {*/
         //     //this.dropOff();
