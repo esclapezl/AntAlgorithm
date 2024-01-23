@@ -4,4 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const treeLayer = new TreeLayer(treesCanvas, treesCtx);
     treeLayer.init();
+
+    // Appel de la fonction loadImages après l'initialisation de treeLayer
+    Chargement.loadImages(treeLayer);
 });
