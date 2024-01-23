@@ -2,6 +2,8 @@ class Fourmi {
     constructor(x,y) {
         this.x = x;
         this.y = y;
+        this.step = 100;
+        this.size = 10;
         this.capacity = 10; // Capacité de charge limitée
         this.carrying = 0; // Quantité actuellement transportée
         this.path = []; // Chemin depuis le dernier point de départ
@@ -9,12 +11,6 @@ class Fourmi {
         this.direction = 0; //0:left 1:up 2:right 3:down
     }
 
-
-    perceive(cell) {
-
-    }
-
-    // Ramasser un objectif
     pickUp(goal) {
         if (this.carrying < this.capacity) {
             let amount = Math.min(this.capacity - this.carrying, goal.quantity);
@@ -40,7 +36,7 @@ class Fourmi {
         });
     }
 
-    scanArea() {
+    scanArea(grid) {
         let possibilites = [];
         const directions = [
             { dx: -1, dy: 0 },  // left
@@ -53,10 +49,10 @@ class Fourmi {
             let newX = this.x + direction.dx;
             let newY = this.y + direction.dy;
             if (newX >= 0
-                && newX < treeLayer.grid[0].length
+                && newX < grid[0].length
                 && newY >= 0
-                && newY < treeLayer.grid.length
-                && treeLayer.grid[newY][newX] === 0) {          /*.GetType() === "Free") {*/
+                && newY < grid.length
+                && grid[newY][newX] === 0) {          /*.GetType() === "Free") {*/
                 possibilites.push({newY ,newX});
             }
         });
@@ -92,6 +88,7 @@ class Fourmi {
         }
         this.x = position.newX;
         this.y = position.newY
+
         // if (this.carrying === 1 && labyrinthe.grid[this.x][this.y] === 2){ /*.GetType() === "Start") {*/
         //     //this.dropOff();
         // } else if (labyrinthe.grid[this.x][this.y] === 3){ /*.GetType() === "Objective") {*/
