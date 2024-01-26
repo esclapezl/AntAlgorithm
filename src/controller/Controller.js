@@ -22,6 +22,7 @@ class Controller {
             [1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
         ];
+        this.cellGrid = this.translateGrid();
         /*** Bindings ***
          La fonction bind() permet de sceller le contexte dans lequel la fonction sera appelée.
          Dans cet exemple, on veut toujours que les fonctions bindDisplayCNF() et bindGetCNF() (de cette classe) soient appelées dans le contexte du Controller.
@@ -51,14 +52,38 @@ class Controller {
     bindDrawAnts () {
         this.view.drawAnts();
     }
+
+    translateGrid() {
+        return this.grid.map((row, i) =>
+            row.map((cell, j) => {
+                switch (cell) {
+                    case 0:
+                        return new Free(i, j, Math.random());
+                    case 1:
+                        return new Obstacle(i, j);
+                    case 2:
+                        return new Start(i, j);
+                    case 3:
+                        return new Objective(i, j);
+                    default:
+                        return new Cell(i, j);
+                }
+            })
+        );
+    }
 }
 
-const app = new Controller(new Model(), new View());
 
+// Your code that uses View.js goes here
+const app = new Controller(new Model(), new View(app.grid));
 let fourmis = [];
 let tickDuration = 500;
 let transition = 10;
 
+document.addEventListener('DOMContentLoaded', function () {
+    app.view.treeLayer.init();
+    Chargement.loadImages(app.view.treeLayer);
+});
 window.addEventListener('keydown', (event) => {
     if (event.key === 'f') {
         let fourmi = new Fourmi(10,10);
