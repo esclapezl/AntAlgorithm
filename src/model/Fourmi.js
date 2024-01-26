@@ -12,11 +12,9 @@ class Fourmi {
 
     pickUp(foodCell) {
         if (this.carrying < this.capacity) {
-            console.log(foodCell);
             this.path.push(app.cellGrid[this.y][this.x]);
             let amount = Math.min(this.capacity - this.carrying, foodCell.quantity);
             this.carrying += amount;
-            console.log(this.carrying);
             foodCell.quantity -= amount;
 
             if(foodCell.quantity === 0){
@@ -24,7 +22,6 @@ class Fourmi {
             }
             this.pathToHome = this.dijkstra()
             this.pathToHome.shift();
-            console.log(this.pathToHome);
         }
     }
 
