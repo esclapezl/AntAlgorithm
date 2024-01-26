@@ -19,13 +19,12 @@ class View {
     initView () {
         this.treeLayer.init(this.width, this.height);
         this.treeLayer.display();
-
         this.antLayer.init(this.width, this.height);
     }
 
     drawAnts (fourmis){
+        app.view.antsCtx.clearRect(0, 0, app.view.antsCanvas.width, app.view.antsCanvas.height); // clear the canvas
         for (let fourmi of fourmis) {
-            app.view.antsCtx.clearRect(0, 0, app.view.antsCanvas.width, app.view.antsCanvas.height); // clear the canvas
             app.view.antsCtx.save(); // sauvegarde l'état actuel du canvas
 
             app.view.antsCtx.translate(fourmi.x * (130 * 0.31) + app.view.antLayer.antImage.width / 2, fourmi.y * (150  * 0.31) + app.view.antLayer.antImage.height / 2); // déplace l'origine du canvas à la position de la fourmi

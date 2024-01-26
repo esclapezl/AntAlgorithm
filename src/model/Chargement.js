@@ -54,6 +54,10 @@ var Chargement = {
                 resumeBtn.disabled = true;
                 // Marquer l'activation des phéromones
                 Chargement.pheromonesActivated = true;
+
+                let fourmi = new Fourmi(9,9);
+                fourmis.push(fourmi);
+                console.log('Fourmi ajoutée !');
             });
 
             stopBtn.addEventListener("click", function () {
@@ -209,18 +213,18 @@ var Chargement = {
                 (function (currentI) {
                     // Instancier un objet de type Food avec les coordonnées actuelles
                     var food = new Food(availablePositions[currentI].x, availablePositions[currentI].y);
-
+                    app.cellGrid[availablePositions[currentI].y][availablePositions[currentI].x] = food;
                     // Dessiner l'image de la nourriture
                     var imgElement = new Image();
                     imgElement.src = '../../ressources/images/ble.png';
 
                     imgElement.onload = function () {
                         const scaleRatio = 0.5;
-                        ctx.drawImage(imgElement, food.x * cellWidth, food.y * cellHeight, cellWidth * scaleRatio, cellHeight * scaleRatio);
+                        ctx.drawImage(imgElement, food.x * cellWidth + imgElement.width / 2, food.y * cellHeight + imgElement.height / 2, cellWidth * scaleRatio, cellHeight * scaleRatio);
                     };
 
                     // Vous pouvez utiliser l'objet food comme nécessaire dans votre programme
-                    console.log("Food placed at coordinates: (" + food.x + ", " + food.y + ")");
+                   // console.log("Food placed at coordinates: (" + food.x + ", " + food.y + ")");
                 })(i);
             }
         } else {

@@ -103,7 +103,7 @@ class TreeLayer {
                             const scaleRatioFourmiliere = 0.25;
                             this.ctx.save();
                             this.ctx.scale(scaleRatioFourmiliere, scaleRatioFourmiliere);
-                            this.ctx.drawImage(newTreeImage, newX / scaleRatioFourmiliere, newY / scaleRatioFourmiliere, cellWidth, cellHeight);
+                            this.ctx.drawImage(newTreeImage, newX / scaleRatioFourmiliere, newY / scaleRatioFourmiliere - newTreeImage.height, cellWidth, cellHeight);
                             this.ctx.restore();
                         };
                     } else if (this.grid[i][j] === 0) {

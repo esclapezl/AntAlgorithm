@@ -12,7 +12,7 @@ class Controller {
             [1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1],
             [1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1],
             [1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 1, 0, 1, 1, 1, 1],
             [1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1],
             [1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1],
             [1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1],
@@ -62,7 +62,7 @@ class Controller {
                     case 1:
                         return new Obstacle(j, i);
                     case 2:
-                        return new Start(j, i);
+                        return new Fourmiliere(j, i);
                     case 3:
                         return new Objective(j, i);
                     default:
@@ -95,7 +95,11 @@ window.addEventListener('keydown', (event) => {
 
 setInterval(() => {
     for (let fourmi of fourmis) {
-        fourmi.move(fourmi.chose(fourmi.scanArea(app.cellGrid)));
+        if (fourmi.carrying === 0) {
+            fourmi.move(fourmi.chose(fourmi.scanArea(app.cellGrid)));
+        } else {
+            fourmi.move(fourmi.goHome())
+        }
     }
     app.view.drawAnts(fourmis);
 }, tickDuration);
