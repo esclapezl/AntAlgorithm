@@ -4,10 +4,12 @@ class View {
         this.height = 500;
 
         this.treesCanvas = document.getElementById('trees-canvas');
+        this.treesCanvas.style.zIndex = '1';
         this.treesCtx = this.treesCanvas.getContext('2d');
         this.treeLayer = new TreeLayer(this.treesCanvas, this.treesCtx);
 
         this.antsCanvas = document.getElementById('ants-canvas');
+        this.antsCanvas.style.zIndex = '2';
         this.antsCtx = this.antsCanvas.getContext('2d');
         this.antLayer = new AntLayer(this.antsCanvas, this.antsCtx);
 
@@ -23,9 +25,10 @@ class View {
 
     drawAnts (fourmis){
         for (let fourmi of fourmis) {
+            app.view.antsCtx.clearRect(0, 0, app.view.antsCanvas.width, app.view.antsCanvas.height); // clear the canvas
             app.view.antsCtx.save(); // sauvegarde l'état actuel du canvas
-            app.view.antsCtx.translate(fourmi.x * fourmi.step + app.view.antLayer.antImage.width / 2, fourmi.y * fourmi.step + app.view.antLayer.antImage.height / 2); // déplace l'origine du canvas à la position de la fourmi
 
+            app.view.antsCtx.translate(fourmi.x * (130 * 0.31) + app.view.antLayer.antImage.width / 2, fourmi.y * (150  * 0.31) + app.view.antLayer.antImage.height / 2); // déplace l'origine du canvas à la position de la fourmi
             // tourne le canvas de l'angle de la direction de la fourmi
             let angle;
             switch(fourmi.direction) {

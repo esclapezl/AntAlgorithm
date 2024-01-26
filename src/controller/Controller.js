@@ -58,15 +58,15 @@ class Controller {
             row.map((cell, j) => {
                 switch (cell) {
                     case 0:
-                        return new Free(i, j, Math.random());
+                        return new Free(j, i, Math.random());
                     case 1:
-                        return new Obstacle(i, j);
+                        return new Obstacle(j, i);
                     case 2:
-                        return new Start(i, j);
+                        return new Start(j, i);
                     case 3:
-                        return new Objective(i, j);
+                        return new Objective(j, i);
                     default:
-                        return new Cell(i, j);
+                        return new Cell(j, i);
                 }
             })
         );
@@ -75,27 +75,27 @@ class Controller {
 
 
 // Your code that uses View.js goes here
-const app = new Controller(new Model(), new View(app.grid));
+const app = new Controller(new Model(), new View());
 let fourmis = [];
 let tickDuration = 500;
 let transition = 10;
 
 document.addEventListener('DOMContentLoaded', function () {
     app.view.treeLayer.init();
+    app.view.antLayer.init();
     Chargement.loadImages(app.view.treeLayer);
 });
 window.addEventListener('keydown', (event) => {
     if (event.key === 'f') {
-        let fourmi = new Fourmi(10,10);
+        let fourmi = new Fourmi(9,9);
         fourmis.push(fourmi);
         console.log('Fourmi ajoutée !');
     }
 });
 
 setInterval(() => {
-    app.view.antsCtx.clearRect(0, 0, app.view.antsCanvas.width, app.view.antsCanvas.height); // clear the canvas
     for (let fourmi of fourmis) {
-        fourmi.move(fourmi.chose(fourmi.scanArea(app.grid)));
+        fourmi.move(fourmi.chose(fourmi.scanArea(app.cellGrid)));
     }
     app.view.drawAnts(fourmis);
 }, tickDuration);

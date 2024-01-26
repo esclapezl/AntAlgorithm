@@ -2,9 +2,6 @@ class Fourmi {
     constructor(x,y) {
         this.x = x;
         this.y = y;
-        this.targetX = x;
-        this.targetY = y;
-        this.step = 20;
         this.size = 0.5;
         this.capacity = 10; // Capacité de charge limitée
         this.carrying = 0; // Quantité actuellement transportée
@@ -40,8 +37,8 @@ class Fourmi {
         const directions = [
             { dx: -1, dy: 0 },  // left
             { dx: 1, dy: 0 },   // right
-            { dx: 0, dy: -1 },  // up
-            { dx: 0, dy: 1 },   // down
+            { dx: 0, dy: -1 },  // down
+            { dx: 0, dy: 1 },   // up
             // add more directions if needed
         ];
         directions.forEach(direction => {
@@ -51,15 +48,15 @@ class Fourmi {
                 && newX < grid[0].length
                 && newY >= 0
                 && newY < grid.length
-                && grid[newY][newX] === 0) {          /*.GetType() === "Free") {*/
-                possibilites.push({newY ,newX});
+                && grid[newY][newX].GetType() === "Free") {
+                possibilites.push(grid[newY][newX]);
             }
         });
         return possibilites;
     }
 
     chose(possibilites) {
-        let inexplorees = possibilites.filter(location => !this.path.includes(location));
+        let inexplorees = possibilites.filter(location => !this.path.some(cell => cell.x === location.x && cell.y === location.y));
         if (inexplorees.length > 0) {
             let choix = inexplorees[Math.floor(Math.random() * inexplorees.length)];
             this.path.push(choix);

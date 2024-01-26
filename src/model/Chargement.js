@@ -37,7 +37,7 @@ var Chargement = {
     pheromonesActivated: false,
 
     loadImages: function (labyrinthe) {
-        console.log("loadImages function called");
+        //console.log("loadImages function called");
         var startBtn = document.getElementById("startBtn");
         var stopBtn = document.getElementById("stopBtn");
         var resumeBtn = document.getElementById("resumeBtn");

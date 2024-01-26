@@ -78,15 +78,20 @@ p {
 
 #canvas-container {
     position: relative;
+    top: 25px;
+    left: -150px;
 }
 
 #trees-canvas {
     position: absolute;
-    top: 25px;
-    left: -150px;
     background-color: #72751b;
     border-radius: 10px;
-    border-radius: 10px;
+    z-index: 1;
+}
+
+#ants-canvas {
+    position: absolute;
+    z-index: 2;
 }
 
 #ant_image img {

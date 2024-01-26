@@ -7,7 +7,7 @@ class TreeLayer {
         this.treeImage = new Image();
         this.treeImage.src = '../../ressources/images/shadow.png';
         this.treeImage.onload = () => {
-            console.log("Image loaded");
+            //console.log("Image loaded");
             this.display();
         };
         this.grid = [
@@ -52,7 +52,6 @@ class TreeLayer {
         // Attendre le chargement de l'image
         overlayImage.onload = () => {
 
-            console.log("Image d'arbre chargée");
             for (let i = 0; i < this.grid.length; i++) {
                 for (let j = 0; j < this.grid[0].length; j++) {
                     // Convertir les coordonnées à virgule en entiers
@@ -88,7 +87,7 @@ class TreeLayer {
                     } else if (i === 9 && j === 9) {
                         // Instancier un objet de type Fourmiliere
                         const fourmiliere = new Fourmiliere(x, y);
-                        console.log(`Fourmiliere created at grid position (${i}, ${j})`); // Position par rapport au grid
+                        //console.log(`Fourmiliere created at grid position (${i}, ${j})`); // Position par rapport au grid
                         // Afficher l'objet Fourmiliere
                         this.displayCell(fourmiliere);
 
@@ -119,9 +118,9 @@ class TreeLayer {
 
 
     displayCell(cell) {
-        console.log(`Cell at (${cell.x}, ${cell.y}) created with type: ${cell.GetType()}`); // Position en pixel du canva
+        //console.log(`Cell at (${cell.x}, ${cell.y}) created with type: ${cell.GetType()}`); // Position en pixel du canva
         if (cell instanceof Free) {
-            console.log(`Quantity: ${cell.GetQty()}`);
+            //console.log(`Quantity: ${cell.GetQty()}`);
         }
     }
 
