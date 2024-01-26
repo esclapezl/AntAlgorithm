@@ -31,3 +31,27 @@ class Free extends Cell {
         this._qty = newValue;
     }
 }
+
+class Fourmiliere extends Cell {
+    constructor(x, y) {
+        super(x, y);
+        this.x = x;
+        this.y = y;
+    }
+
+    GetType() {
+        return "Fourmiliere";
+    }
+}
+
+class Food extends Cell {
+    constructor(x, y) {
+        super(x, y);
+        this.x = x;
+        this.y = y;
+    }
+
+    GetType() {
+        return "Food";
+    }
+}

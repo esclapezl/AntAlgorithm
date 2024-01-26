@@ -9,9 +9,9 @@
     margin-top: 10px;
     width: 100px;
     padding: 10px;
-    background-color: #4CAF50;
+    background: linear-gradient(to right, #ffd24a, #ffb52d);
     color: white;
-    border: 1px solid #4CAF50;
+    border: 1px solid #ffce46;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -35,7 +35,7 @@
 
 #startBtn:hover,
 #stopBtn:hover, #resumeBtn:hover, #pheromonesBtn:hover {
-    background-color: yellowgreen;
+    background: linear-gradient(to right, #ffff99, #ffa82d);
 }
 
 #labyrinthe td {
@@ -56,8 +56,7 @@
 }
 
 .section-container {
-    background-color: darkgray;
-    border-radius: 5px;
+    background-color: #979b2f;
 }
 
 section {
@@ -83,9 +82,10 @@ p {
 
 #trees-canvas {
     position: absolute;
-    top: 80px;
+    top: 25px;
     left: -150px;
-    background-color: #445600;
+    background-color: #72751b;
+    border-radius: 10px;
     border-radius: 10px;
 }
 
