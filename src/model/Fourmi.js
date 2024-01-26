@@ -3,7 +3,7 @@ class Fourmi {
         this.x = x;
         this.y = y;
         this.size = 0.5;
-        this.capacity = 10; // Capacité de charge limitée
+        this.capacity = 0.1; // Capacité de charge limitée
         this.carrying = 0; // Quantité actuellement transportée
         this.path = []; // Chemin depuis le dernier point de départ
         this.pathToHome = []; // Chemin vers la fourmilière

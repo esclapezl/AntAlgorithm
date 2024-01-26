@@ -49,7 +49,7 @@ class Food extends Cell {
         super(x, y);
         this.x = x;
         this.y = y;
-        this.quantity = 100;
+        this.quantity = 1;
     }
 
     GetType() {
