@@ -8,6 +8,7 @@ class Fourmi {
         this.path = []; // Chemin depuis le dernier point de départ
         this.pathToHome = []; // Chemin vers la fourmilière
         this.direction = 0; //0:left 1:up 2:right 3:down
+        this.speed = 0.1; // divise 0.5
     }
 
     pickUp(foodCell) {
@@ -29,6 +30,10 @@ class Fourmi {
         this.carrying = 0;
         this.path = [];
         this.pathToHome = [];
+    }
+
+    isAtCenter() {
+        return this.x % 1 === 0 && this.y % 1 === 0;
     }
 
     scanArea(grid) {
@@ -71,36 +76,59 @@ class Fourmi {
         }
     }
 
-    move(cell) {
-        if(this.x === cell.x){
-            if(this.y > cell.y){
-                this.direction = 1;
-            }else{
-                this.direction = 3;
-            }
-        }
-        if(this.y === cell.y){
-            if(this.x > cell.x){
-                this.direction = 0;
-            }else{
-                this.direction = 2;
-            }
-        }
-        this.x = cell.x;
-        this.y = cell.y;
-
+    checkObjective(cell){
         if (this.carrying > 0 && cell.GetType() === "Fourmiliere") {
             this.dropOff(cell);
         } else if (this.carrying === 0 && cell.GetType() === "Food") {
             this.pickUp(cell);
         }
     }
+    moveToward(cell) {
+        if(this.x === cell.x){
+            if(this.y > cell.y){
+                this.direction = 1;
+                this.y -= this.speed;
+            }else{
+                this.direction = 3;
+                this.y += this.speed;
+            }
+        }
+        if(this.y === cell.y){
+            if(this.x > cell.x){
+                this.direction = 0;
+                this.x -= this.speed;
+            }else{
+                this.direction = 2;
+                this.x += this.speed;
+            }
+        }
+    }
+    move(){
+        switch(this.direction) {
+            case 0: // gauche
+                this.x = Math.round((this.x - this.speed) * 100) / 100;
+                break;
+            case 1: // haut
+                this.y = Math.round((this.y - this.speed) * 100) / 100;
+                break;
+            case 2: // droite
+                this.x = Math.round((this.x + this.speed) * 100) / 100;
+                break;
+            case 3: // bas
+                this.y = Math.round((this.y + this.speed) * 100) / 100;
+                break;
+        }
+    }
 
     goHome() {
         if (this.pathToHome.length > 0) {
-            return this.pathToHome.shift();
+            return this.pathToHome[0];
         }
         return null;
+    }
+
+    nextCellToHome() {
+        this.pathToHome.shift();
     }
 
     dijkstra() {

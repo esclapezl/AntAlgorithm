@@ -77,7 +77,7 @@ class Controller {
 // Your code that uses View.js goes here
 const app = new Controller(new Model(), new View());
 let fourmis = [];
-let tickDuration = 500;
+let tickDuration = 25;
 let transition = 10;
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -95,11 +95,25 @@ window.addEventListener('keydown', (event) => {
 
 setInterval(() => {
     for (let fourmi of fourmis) {
-        if (fourmi.carrying === 0) {
-            fourmi.move(fourmi.chose(fourmi.scanArea(app.cellGrid)));
-        } else {
-            fourmi.move(fourmi.goHome())
+        if(fourmi.isAtCenter()){
+            fourmi.checkObjective(app.cellGrid[fourmi.y][fourmi.x]);
+            if (fourmi.carrying === 0) {
+                fourmi.moveToward(fourmi.chose(fourmi.scanArea(app.cellGrid)));
+            } else {
+                if(fourmi.isAtCenter()
+                    && fourmi.x === fourmi.goHome().x
+                    && fourmi.y === fourmi.goHome().y)
+                {
+                    fourmi.nextCellToHome()
+                }
+                fourmi.moveToward(fourmi.goHome())
+            }
         }
+        else
+        {
+            fourmi.move()
+        }
+
     }
     app.view.drawAnts(fourmis);
 }, tickDuration);
