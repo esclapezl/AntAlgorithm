@@ -8,10 +8,11 @@ class AntLayer {
     }
 
     init() {
-        const width = 755;
-        const height = 870;
-        this.canvas.width = width;
-        this.canvas.height = height;
+        this.cellWidth = 130;
+        this.cellHeight = 150;
+        this.canvas.width = 755;
+        this.canvas.height = 870;
+        this.spacingFactor = 0.31;
     }
 }
 

@@ -1,5 +1,5 @@
 class View {
-    constructor(div_id) {
+    constructor() {
         this.width = 500;
         this.height = 500;
 
@@ -9,9 +9,14 @@ class View {
         this.treeLayer = new TreeLayer(this.treesCanvas, this.treesCtx);
 
         this.antsCanvas = document.getElementById('ants-canvas');
-        this.antsCanvas.style.zIndex = '2';
+        this.antsCanvas.style.zIndex = '3';
         this.antsCtx = this.antsCanvas.getContext('2d');
         this.antLayer = new AntLayer(this.antsCanvas, this.antsCtx);
+
+        this.foodsCanvas = document.getElementById('foods-canvas');
+        this.foodsCanvas.style.zIndex = '2';
+        this.foodsCtx = this.foodsCanvas.getContext('2d');
+        this.foodLayer = new FoodLayer(this.foodsCanvas, this.foodsCtx);
 
         this.initView();
     }
@@ -20,6 +25,7 @@ class View {
         this.treeLayer.init(this.width, this.height);
         this.treeLayer.display();
         this.antLayer.init(this.width, this.height);
+        this.foodLayer.init(this.width, this.height);
     }
 
     drawAnts (fourmis){
@@ -54,6 +60,13 @@ class View {
             }
 
             app.view.antsCtx.restore(); // restaure l'état précédent du canvas
+        }
+    }
+
+    drawFood(foods){
+        app.view.foodsCtx.clearRect(0, 0, app.view.antsCanvas.width, app.view.antsCanvas.height); // clear the canvas
+        for (let food of foods) {
+
         }
     }
 }

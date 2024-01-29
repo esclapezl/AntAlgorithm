@@ -77,16 +77,19 @@ class Controller {
 // Your code that uses View.js goes here
 const app = new Controller(new Model(), new View());
 let fourmis = [];
-let tickDuration = 25;
+let foods = [];
+let tickDuration = 12;
 let transition = 10;
 
 document.addEventListener('DOMContentLoaded', function () {
     app.view.treeLayer.init();
     app.view.antLayer.init();
+    app.view.foodLayer.init();
     Chargement.loadImages(app.view.treeLayer);
 });
 window.addEventListener('keydown', (event) => {
     if (event.key === 'f') {
+
         let fourmi = new Fourmi(9,9);
         fourmis.push(fourmi);
         console.log('Fourmi ajoutée !');
@@ -117,10 +120,3 @@ setInterval(() => {
     }
     app.view.drawAnts(fourmis);
 }, tickDuration);
-
-// setInterval(() => {
-//     for (let fourmi of fourmis) {
-//         fourmi.transition(transition);
-//     }
-//     app.view.drawAnts(fourmis);
-// }, tickDuration/transition);

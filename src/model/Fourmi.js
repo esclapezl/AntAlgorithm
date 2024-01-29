@@ -2,13 +2,13 @@ class Fourmi {
     constructor(x,y) {
         this.x = x;
         this.y = y;
-        this.size = 0.5;
+        this.size = 0.3;
         this.capacity = 0.1; // Capacité de charge limitée
         this.carrying = 0; // Quantité actuellement transportée
         this.path = []; // Chemin depuis le dernier point de départ
         this.pathToHome = []; // Chemin vers la fourmilière
         this.direction = 0; //0:left 1:up 2:right 3:down
-        this.speed = 0.1; // divise 0.5
+        this.speed = 0.05; // divise 0.5
     }
 
     pickUp(foodCell) {
@@ -17,10 +17,11 @@ class Fourmi {
             let amount = Math.min(this.capacity - this.carrying, foodCell.quantity);
             this.carrying += amount;
             foodCell.quantity -= amount;
-
             if(foodCell.quantity === 0){
                 app.cellGrid[foodCell.y][foodCell.x] = new Free(foodCell.x, foodCell.y);
+                foods = foods.filter(food => food !== foodCell);
             }
+            app.view.foodLayer.drawFoods(foods);
             this.pathToHome = this.dijkstra()
             this.pathToHome.shift();
         }

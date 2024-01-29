@@ -89,7 +89,7 @@ p {
     z-index: 1;
 }
 
-#ants-canvas {
+#ants-canvas, #foods-canvas {
     position: absolute;
     z-index: 2;
 }
