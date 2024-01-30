@@ -139,5 +139,28 @@ p {
     padding: 10px;
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f2f2f2; /* Couleur de fond gris */
+}
+
+/* Style des cellules du tableau */
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Style de l'en-tête du tableau */
+th {
+    background-color: #ddd; /* Couleur de fond plus claire pour l'en-tête */
+}
+
+/* Style des lignes impaires du tableau */
+tr:nth-child(odd) {
+    background-color: #e6e6e6; /* Couleur de fond légèrement plus foncée pour les lignes impaires */
+}
+
 
 

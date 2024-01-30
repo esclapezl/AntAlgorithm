@@ -11,7 +11,6 @@
       <script src="PheromoneLayer.js"></script>
       <script src="../model/Cell.js"></script>
       <script src="../model/Model.js"></script>
-      <script src="../model/Chargement.js"></script>
       <script src="../model/Node.js"></script>
       <script src="../model/Fourmi.js"></script>
       <script src="../view/View.js"></script>
@@ -44,22 +43,22 @@
                       </div>
                       <button type="button" id="pheromonesBtn" onclick="activatePheromones()">Active phéromones</button>
                   </div>
-                  <table>
+                  <table id="editableTable">
                       <tr>
                           <th>Titres</th>
                           <th>Valeurs</th>
                       </tr>
                       <tr>
                           <td>Nombre de fourmis</td>
-                          <td>5</td>
+                          <td contenteditable="true">5</td>
                       </tr>
                       <tr>
                           <td>Nombre de nourritures</td>
-                          <td>5</td>
+                          <td contenteditable="true">5</td>
                       </tr>
                       <tr>
                           <td>Vitesse de la simulation</td>
-                          <td>4</td>
+                          <td contenteditable="true">4</td>
                       </tr>
                   </table>
               </div>
