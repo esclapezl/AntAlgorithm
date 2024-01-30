@@ -18,7 +18,7 @@
   </head>
 
   <body>
-      <section class="container-fluid content section-container">
+      <section class="section-container">
               <div id="canvas-container">
                   <canvas id="ants-canvas"></canvas>
                   <canvas id="trees-canvas"></canvas>
@@ -35,14 +35,31 @@
                   </div>
 
                   <div>
-                      <button type="button" id="startBtn">Start</button>
-                      <button type="button" id="stopBtn"  onclick="stopCounter()">Stop</button>
-                      <button type="button" id="resumeBtn" onclick="resumeCounter()">Reprendre</button>
-                  </div>
-
-                  <div>
+                      <div>
+                          <button type="button" id="startBtn">Start</button>
+                          <button type="button" id="stopBtn"  onclick="stopCounter()">Stop</button>
+                          <button type="button" id="resumeBtn" onclick="resumeCounter()">Reprendre</button>
+                      </div>
                       <button type="button" id="pheromonesBtn" onclick="activatePheromones()">Active phéromones</button>
                   </div>
+                  <table>
+                      <tr>
+                          <th>Titres</th>
+                          <th>Valeurs</th>
+                      </tr>
+                      <tr>
+                          <td>Nombre de fourmis</td>
+                          <td>5</td>
+                      </tr>
+                      <tr>
+                          <td>Nombre de nourritures</td>
+                          <td>5</td>
+                      </tr>
+                      <tr>
+                          <td>Vitesse de la simulation</td>
+                          <td>4</td>
+                      </tr>
+                  </table>
               </div>
       </section>
   </body>

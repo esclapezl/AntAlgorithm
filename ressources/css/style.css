@@ -1,3 +1,8 @@
+:root {
+    --width: 750px;
+    --height: 800px;
+}
+
 .content {
     display: flex;
     flex-direction: column;
@@ -17,7 +22,7 @@
 }
 
 #startBtn {
-    margin-left: -800px;
+
 }
 
 #stopBtn {
@@ -29,7 +34,7 @@
 }
 
 #pheromonesBtn {
-    margin-left: -800px;
+
     width: 348px;
 }
 
@@ -56,7 +61,12 @@
 }
 
 .section-container {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
     background-color: #979b2f;
+    padding: 20px;
 }
 
 section {
@@ -73,13 +83,14 @@ p {
     font-size: 36px;
     text-align: center;
     padding: 5px 10px;
-    margin-left: -1300px;
+
 }
 
 #canvas-container {
     position: relative;
-    top: 25px;
-    left: -150px;
+    height: var(--height);
+    width: var(--width);
+
 }
 
 #trees-canvas {
@@ -97,13 +108,11 @@ p {
 #ant_image img {
     width: 350px;
     height: auto;
-    margin-left: -800px;
 }
 
 #logo_labyrinthe img {
     width: 300px;
     height: auto;
-    margin-left: -800px;
 }
 
 .banner-text {
@@ -116,7 +125,7 @@ p {
 
 #StartGame {
     border-radius: 30px;
-    padding: 10px; /* Ajoutez un peu de marge intérieure si nécessaire */
+    padding: 10px;
 }
 
 

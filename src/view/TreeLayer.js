@@ -33,10 +33,8 @@ class TreeLayer {
     }
 
     init() {
-        const width = 755;
-        const height = 870;
-        this.canvas.width = width;
-        this.canvas.height = height;
+        this.canvas.width = 755;
+        this.canvas.height = 870;
     }
 
     display() {
@@ -77,10 +75,14 @@ class TreeLayer {
                         // Dessiner l'image à superposer (overlay)
                         this.ctx.drawImage(
                             overlayImage,
-                            indiceSprite * cellWidth, 0,
-                            cellWidth, cellHeight,
-                            0, 0,
-                            cellWidth, cellHeight
+                            indiceSprite * cellWidth,
+                            0,
+                            cellWidth,
+                            cellHeight,
+                            0,
+                            0,
+                            cellWidth,
+                            cellHeight
                         );
 
                         this.ctx.restore();

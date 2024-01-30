@@ -79,7 +79,6 @@ const app = new Controller(new Model(), new View());
 let fourmis = [];
 let foods = [];
 let tickDuration = 12;
-let transition = 10;
 
 document.addEventListener('DOMContentLoaded', function () {
     app.view.treeLayer.init();
