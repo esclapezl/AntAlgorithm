@@ -110,7 +110,7 @@ p {
     z-index: 1;
 }
 
-#ants-canvas, #foods-canvas {
+#ants-canvas, #foods-canvas, #pheromones-canvas {
     position: absolute;
     z-index: 2;
 }

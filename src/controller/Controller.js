@@ -58,7 +58,7 @@ class Controller {
             row.map((cell, j) => {
                 switch (cell) {
                     case 0:
-                        return new Free(j, i, Math.random());
+                        return new Free(j, i);
                     case 1:
                         return new Obstacle(j, i);
                     case 2:
@@ -117,5 +117,6 @@ setInterval(() => {
         }
 
     }
-    app.view.drawAnts(fourmis);
+    app.view.antLayer.drawAnts(fourmis);
+    app.view.pheromonesLayer.drawPheromones(app.cellGrid);
 }, tickDuration);

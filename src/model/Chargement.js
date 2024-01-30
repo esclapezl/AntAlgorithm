@@ -80,69 +80,6 @@ var Chargement = {
         }
     },
 
-    togglePheromones: function (pheromonesBtn, labyrinthe) {
-        if (!Chargement.pheromonesActivated) {
-            Chargement.activatePheromones(labyrinthe);
-        } else {
-            Chargement.deactivatePheromones(labyrinthe);
-        }
-        Chargement.pheromonesActivated = !Chargement.pheromonesActivated;
-        pheromonesBtn.disabled = Chargement.pheromonesActivated;
-    },
-
-    deactivatePheromones: function (labyrinthe) {
-        if (labyrinthe && labyrinthe.grid) {
-            var canvas = document.getElementById("trees-canvas");
-            var ctx = canvas.getContext("2d");
-
-            var cellWidth = canvas.width / labyrinthe.grid[0].length;
-            var cellHeight = canvas.height / labyrinthe.grid.length;
-
-            for (var y = 0; y < labyrinthe.grid.length; y++) {
-                for (var x = 0; x < labyrinthe.grid[y].length; x++) {
-                    if (labyrinthe.grid[y][x] === 0) {
-                        var freeCell = Chargement.getCellByPosition(x, y, labyrinthe);
-                        ctx.fillStyle = "white";
-                        ctx.font = "bold 12px Arial";
-                        ctx.fillText(freeCell.GetQty().toString(), x * cellWidth + cellWidth / 2 - 5, y * cellHeight + cellHeight / 2 + 5);
-                    }
-                }
-            }
-
-            Chargement.pheromonesActivated = false;
-        } else {
-            console.error("L'objet labyrinthe ou sa propriété grid est indéfini.");
-        }
-    },
-
-    activatePheromones: function (labyrinthe) {
-        if (labyrinthe && labyrinthe.grid) {
-            var canvas = document.getElementById("trees-canvas");
-            var ctx = canvas.getContext("2d");
-
-            var cellWidth = canvas.width / labyrinthe.grid[0].length;
-            var cellHeight = canvas.height / labyrinthe.grid.length;
-
-            for (var y = 0; y < labyrinthe.grid.length; y++) {
-                for (var x = 0; x < labyrinthe.grid[y].length; x++) {
-                    if (labyrinthe.grid[y][x] === 0) {
-                        if (!((y === Fourmiliere.y && x === Fourmiliere.x) || (y === Food.y && x === Food.x ))) {
-                            ctx.fillStyle = "white";
-                            ctx.beginPath();
-                            ctx.arc(x * cellWidth + cellWidth / 2, y * cellHeight + cellHeight / 2, 2, 0, 2 * Math.PI);
-                            ctx.fill();
-                            ctx.closePath();
-                        }
-                    }
-                }
-            }
-
-            Chargement.pheromonesActivated = true;
-        } else {
-            console.error("L'objet labyrinthe ou sa propriété grid est indéfini.");
-        }
-    },
-
     startTimer: function () {
         Chargement.timerInterval = setInterval(function () {
             Chargement.seconds++;

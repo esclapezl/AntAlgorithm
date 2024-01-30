@@ -19,17 +19,13 @@ class Obstacle extends Cell {
 }
 
 class Free extends Cell {
-    constructor(x, y, qty = 0.0) {
+    constructor(x, y) {
         super(x, y);
-        this._qty = qty;
+        this.pheromone = 0;
+        this.passage = 0;
     }
 
-    GetQty() {
-        return this._qty;
-    }
-    SetQty(newValue) {
-        this._qty = newValue;
-    }
+
 }
 
 class Fourmiliere extends Cell {
