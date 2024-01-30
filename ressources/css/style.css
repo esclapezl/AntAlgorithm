@@ -14,11 +14,18 @@
     margin-top: 10px;
     width: 100px;
     padding: 10px;
-    background: linear-gradient(to right, #ffd24a, #ffb52d);
-    color: white;
-    border: 1px solid #ffce46;
+    background-color: #f96757;
+    color: #ffe4e2;
+    border: 1px solid #523c3c;
     border-radius: 5px;
     cursor: pointer;
+}
+
+#startBtn:hover,
+#stopBtn:hover, #resumeBtn:hover, #pheromonesBtn:hover {
+    background-color: #ffe4e2;
+    color: #f96757;
+    font-weight: bold;
 }
 
 #startBtn {
@@ -36,11 +43,6 @@
 #pheromonesBtn {
 
     width: 348px;
-}
-
-#startBtn:hover,
-#stopBtn:hover, #resumeBtn:hover, #pheromonesBtn:hover {
-    background: linear-gradient(to right, #ffff99, #ffa82d);
 }
 
 #labyrinthe td {
