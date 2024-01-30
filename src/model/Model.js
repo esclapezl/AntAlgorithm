@@ -28,5 +28,16 @@ class Model {
             });
     }
 
+    decrementPheromones(cellGrid, factor) {
+        // Parcourir chaque cellule de la grille
+        for (let y = 0; y < cellGrid.length; y++) {
+            for (let x = 0; x < cellGrid[y].length; x++) {
+                let cell = cellGrid[y][x];
+                if (cell.GetType() === 'Free') {
+                    cell.pheromone = Math.max(cell.pheromone - factor,0);
+                }
+            }
+        }
+    }
 
 }

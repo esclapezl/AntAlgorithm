@@ -48,7 +48,7 @@ var Chargement = {
                     resumeBtn.disabled = true;
                     Chargement.pheromonesActivated = true;
 
-                    foods = app.view.foodLayer.generateFood(5, app.cellGrid[9][9]);
+                    foods = app.view.foodLayer.generateFood(10, app.cellGrid[9][9]);
                     app.view.foodLayer.drawFoods(foods);
 
                     let fourmi = new Fourmi(9,9);

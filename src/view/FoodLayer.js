@@ -45,12 +45,15 @@ class FoodLayer {
     drawFoods(foods){
         app.view.foodsCtx.clearRect(0, 0, app.view.foodsCanvas.width, app.view.foodsCanvas.height);
         for (let food of foods) {
-            let scale = this.scale * food.quantity;
+            let scale = (0.2 + this.scale * food.quantity) / 2;
+            let imageWidth = this.cellWidth * scale;
+            let imageHeight = this.cellHeight * scale;
+
             this.ctx.drawImage(this.foodImage,
-                food.x * this.cellWidth * this.spacingFactor + this.foodImage.width / 2 + (this.cellWidth * scale) / 2,
-                food.y * this.cellHeight * this.spacingFactor + this.foodImage.height / 2 + (this.cellHeight * scale) / 2,
-                this.cellWidth * scale,
-                this.cellHeight * scale);
+                food.x * this.cellWidth * this.spacingFactor + this.cellWidth / 4 - imageWidth / 2,
+                food.y * this.cellHeight * this.spacingFactor + this.cellHeight / 4 - imageHeight / 2,
+                imageWidth,
+                imageHeight);
         }
     }
 }

@@ -24,11 +24,13 @@ class Fourmi {
             app.view.foodLayer.drawFoods(foods);
             this.pathToHome = this.dijkstra()
             this.pathToHome.shift();
+            this.path = this.pathToHome.slice();
         }
     }
 
     dropOff(startingPoint) {
         this.carrying = 0;
+        this.layPheromones(1,this.path);
         this.path = [];
         this.pathToHome = [];
     }
@@ -65,15 +67,12 @@ class Fourmi {
         let foodCells = possibilites.filter(cell => cell.GetType() === "Food");
         this.path.push(app.cellGrid[this.y][this.x]);
         if(foodCells.length > 0){
-            let choix = foodCells[Math.floor(Math.random() * foodCells.length)];
-            return choix;
+            return foodCells[Math.floor(Math.random() * foodCells.length)];
         }
         else if (inexplorees.length > 0) {
-            let choix = inexplorees[Math.floor(Math.random() * inexplorees.length)];
-            return choix;
+            return inexplorees[Math.floor(Math.random() * inexplorees.length)];
         } else {
-            let choix = possibilites[Math.floor(Math.random() * possibilites.length)];
-            return choix;
+            return possibilites[Math.floor(Math.random() * possibilites.length)];
         }
     }
 
@@ -140,7 +139,6 @@ class Fourmi {
 
         // Vérifie si la fourmilière est dans le chemin
         if (!fourmiliere) {
-            console.error("La fourmilière n'est pas dans le chemin de la fourmi.");
             return null;
         }
 
@@ -185,7 +183,6 @@ class Fourmi {
             }
         }
 
-        console.error("Aucun chemin trouvé vers la fourmilière.");
         return null;
     }
 
@@ -205,6 +202,13 @@ class Fourmi {
             }
         });
         return neighbors;
+    }
+
+    layPheromones(quantity,path){
+        let pheromoneFraction = quantity / path.length;
+        for (let cell of path) {
+            app.cellGrid[cell.y][cell.x].pheromone += pheromoneFraction;
+        }
     }
 
 }
