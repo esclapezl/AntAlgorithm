@@ -15,7 +15,7 @@ class PheromoneLayer {
     drawPheromones(cellGrid) {
         let max = 2;
         let min = 0.5;
-        let textMode = false;
+        let textMode = true;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         // Parcourir chaque cellule de la grille
         for (let y = 0; y < cellGrid.length; y++) {
