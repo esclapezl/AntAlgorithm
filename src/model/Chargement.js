@@ -41,7 +41,6 @@ var Chargement = {
         if (startBtn && stopBtn && resumeBtn && pheromonesBtn) {
             if (!this.startBtnClicked) {
                 startBtn.addEventListener("click", function () {
-                    console.log("clicked0");
                     Chargement.startTimer();
                     Chargement.placeRandomImages(labyrinthe);
                     startBtn.disabled = true;

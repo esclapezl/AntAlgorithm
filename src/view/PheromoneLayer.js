@@ -5,7 +5,6 @@ class PheromoneLayer {
     }
 
     init() {
-        console.log('PheromoneLayer init');
         this.cellWidth = 130;
         this.cellHeight = 150;
         this.canvas.width = 755;
@@ -14,7 +13,6 @@ class PheromoneLayer {
     }
 
     drawPheromones(cellGrid) {
-
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         // Parcourir chaque cellule de la grille
         for (let y = 0; y < cellGrid.length; y++) {
@@ -31,5 +29,9 @@ class PheromoneLayer {
                 }
             }
         }
+    }
+
+    togglePheromonesVisibility() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 }
