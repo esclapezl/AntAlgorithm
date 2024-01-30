@@ -102,7 +102,7 @@ class TreeLayer {
                         const newTreeImage = new Image();
                         newTreeImage.src = '../../ressources/images/fourmiliere.png';
                         newTreeImage.onload = () => {
-                            const scaleRatioFourmiliere = 0.25;
+                            const scaleRatioFourmiliere = 0.20;
                             this.ctx.save();
                             this.ctx.scale(scaleRatioFourmiliere, scaleRatioFourmiliere);
                             this.ctx.drawImage(newTreeImage, newX / scaleRatioFourmiliere, newY / scaleRatioFourmiliere - newTreeImage.height, cellWidth, cellHeight);

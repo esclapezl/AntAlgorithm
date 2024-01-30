@@ -33,7 +33,7 @@ class View {
         for (let fourmi of fourmis) {
             app.view.antsCtx.save(); // sauvegarde l'état actuel du canvas
 
-            app.view.antsCtx.translate(fourmi.x * (130 * 0.31) + app.view.antLayer.antImage.width / 2, fourmi.y * (150  * 0.31) + app.view.antLayer.antImage.height / 2); // déplace l'origine du canvas à la position de la fourmi
+            app.view.antsCtx.translate(fourmi.x * (130 * 0.31) + app.view.antLayer.antImage.width / 2, fourmi.y * (150  * 0.31) + app.view.antLayer.antImage.height / 2 + 5); // déplace l'origine du canvas à la position de la fourmi
             // tourne le canvas de l'angle de la direction de la fourmi
             let angle;
             switch(fourmi.direction) {
