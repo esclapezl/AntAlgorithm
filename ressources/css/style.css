@@ -10,6 +10,13 @@
     height: 100vh;
 }
 
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f2f2f2;
+}
+
 #startBtn, #stopBtn, #resumeBtn, #pheromonesBtn{
     margin-top: 10px;
     width: 100px;
@@ -65,10 +72,8 @@
 .section-container {
     display: flex;
     flex-direction: row-reverse;
-    align-items: center;
     justify-content: center;
     background-color: #979b2f;
-    padding: 0px 20px;
 }
 
 @media (max-width: 1100px) {
@@ -100,6 +105,7 @@ p {
     height: var(--height);
     width: var(--width);
     scale: 80%;
+    top: 0;
 
 }
 
