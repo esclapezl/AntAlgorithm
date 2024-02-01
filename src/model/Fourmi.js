@@ -9,6 +9,7 @@ class Fourmi {
         this.pathToHome = []; // Chemin vers la fourmilière
         this.direction = 0; //0:left 1:up 2:right 3:down
         this.speed = 0.05; // divise 0.5
+        this.probExploration = 0.4;
     }
 
     pickUp(foodCell) {
@@ -20,6 +21,7 @@ class Fourmi {
             if(foodCell.quantity === 0){
                 app.cellGrid[foodCell.y][foodCell.x] = new Free(foodCell.x, foodCell.y);
                 foods = foods.filter(food => food !== foodCell);
+                this.deleteAllPheromones(this.path);
             }
             app.view.foodLayer.drawFoods(foods);
             this.pathToHome = this.dijkstra()
@@ -30,7 +32,7 @@ class Fourmi {
 
     dropOff(startingPoint) {
         this.carrying = 0;
-        this.layPheromones(1,this.path);
+        this.layPheromones(5,this.path);
         this.path = [];
         this.pathToHome = [];
     }
@@ -63,16 +65,38 @@ class Fourmi {
     }
 
     chose(possibilites) {
+        let pheromoneCells = possibilites.filter(cell => cell.pheromone > 0);
         let inexplorees = possibilites.filter(location => !this.path.some(cell => cell.x === location.x && cell.y === location.y));
         let foodCells = possibilites.filter(cell => cell.GetType() === "Food");
         this.path.push(app.cellGrid[this.y][this.x]);
+
+        if (this.path.length >= 4) {
+            let lastFourCells = this.path.slice(-4);
+            if (lastFourCells[0].x === lastFourCells[2].x && lastFourCells[0].y === lastFourCells[2].y &&
+                lastFourCells[1].x === lastFourCells[3].x && lastFourCells[1].y === lastFourCells[3].y) {
+                this.deletePheromones(lastFourCells[0]);
+                this.deletePheromones(lastFourCells[1]);
+            }
+        }
+
         if(foodCells.length > 0){
             return foodCells[Math.floor(Math.random() * foodCells.length)];
+        }
+        else if(pheromoneCells.length > 0 && this.probExploration <= Math.random()){
+            return pheromoneCells.reduce((maxCell, currentCell) => currentCell.pheromone > maxCell.pheromone ? currentCell : maxCell);
         }
         else if (inexplorees.length > 0) {
             return inexplorees[Math.floor(Math.random() * inexplorees.length)];
         } else {
-            return possibilites[Math.floor(Math.random() * possibilites.length)];
+            if (possibilites.length > 1 && this.path.length > 0) {
+                let previousCell = this.path[this.path.length - 2];
+                possibilites = possibilites.filter(cell => cell.x !== previousCell.x || cell.y !== previousCell.y);
+                return possibilites[Math.floor(Math.random() * possibilites.length)];
+            }
+            else
+            {
+                return possibilites[0];
+            }
         }
     }
 
@@ -208,7 +232,18 @@ class Fourmi {
         let pheromoneFraction = quantity / path.length;
         for (let cell of path) {
             app.cellGrid[cell.y][cell.x].pheromone += pheromoneFraction;
+            pheromoneFraction *= 0.9;
         }
+    }
+
+    deleteAllPheromones(path){
+        for (let cell of path) {
+            app.cellGrid[cell.y][cell.x].pheromone = 0;
+        }
+    }
+
+    deletePheromones(cell){
+        app.cellGrid[cell.y][cell.x].pheromone = 0;
     }
 
 }

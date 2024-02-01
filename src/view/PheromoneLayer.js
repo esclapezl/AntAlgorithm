@@ -13,7 +13,7 @@ class PheromoneLayer {
     }
 
     drawPheromones(cellGrid) {
-        let max = 2;
+        let max = 1;
         let min = 0.5;
         let textMode = true;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);

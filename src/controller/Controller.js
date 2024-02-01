@@ -78,7 +78,7 @@ class Controller {
 const app = new Controller(new Model(), new View());
 let fourmis = [];
 let foods = [];
-let tickDuration = 12;
+
 
 document.addEventListener('DOMContentLoaded', function () {
     app.view.treeLayer.init();
@@ -94,32 +94,6 @@ window.addEventListener('keydown', (event) => {
         console.log('Fourmi ajoutée !');
     }
 });
-
-setInterval(() => {
-    for (let fourmi of fourmis) {
-        if(fourmi.isAtCenter()){
-            fourmi.checkObjective(app.cellGrid[fourmi.y][fourmi.x]);
-            if (fourmi.carrying === 0) {
-                fourmi.moveToward(fourmi.chose(fourmi.scanArea(app.cellGrid)));
-            } else {
-                if(fourmi.isAtCenter()
-                    && fourmi.x === fourmi.goHome().x
-                    && fourmi.y === fourmi.goHome().y)
-                {
-                    fourmi.nextCellToHome()
-                }
-                fourmi.moveToward(fourmi.goHome())
-            }
-        }
-        else
-        {
-            fourmi.move()
-        }
-
-    }
-    app.view.antLayer.drawAnts(fourmis);
-    app.view.pheromonesLayer.drawPheromones(app.cellGrid);
-}, tickDuration);
 
 // Chargement.js
 var Chargement = {
@@ -164,7 +138,6 @@ var Chargement = {
         if (startBtn && stopBtn && resumeBtn && pheromonesBtn) {
             if (!this.startBtnClicked) {
                 startBtn.addEventListener("click", function () {
-                    console.log("clicked");
                     Chargement.startTimer();
                     Chargement.startGame();
                     Chargement.placeRandomImages(labyrinthe);
@@ -214,7 +187,32 @@ var Chargement = {
         foods = app.view.foodLayer.generateFood(numberOfFoods, app.cellGrid[9][9]);
         app.view.foodLayer.drawFoods(foods);
         // Speed du tableau
-        app.setTickDuration(simulationSpeed);
+        setInterval(() => {
+            for (let fourmi of fourmis) {
+                if(fourmi.isAtCenter()){
+                    fourmi.checkObjective(app.cellGrid[fourmi.y][fourmi.x]);
+                    if (fourmi.carrying === 0) {
+                        fourmi.moveToward(fourmi.chose(fourmi.scanArea(app.cellGrid)));
+                    } else {
+                        if(fourmi.isAtCenter()
+                            && fourmi.x === fourmi.goHome().x
+                            && fourmi.y === fourmi.goHome().y)
+                        {
+                            fourmi.nextCellToHome()
+                        }
+                        fourmi.moveToward(fourmi.goHome())
+                    }
+                }
+                else
+                {
+                    fourmi.move()
+                }
+
+            }
+            app.view.antLayer.drawAnts(fourmis);
+            app.view.pheromonesLayer.drawPheromones(app.cellGrid);
+            app.model.decrementPheromones(app.cellGrid, 0.00001);
+        }, simulationSpeed);
     },
 
     togglePheromones: function (pheromonesBtn, labyrinthe) {
