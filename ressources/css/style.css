@@ -12,9 +12,10 @@
 
 body{
     margin: 0;
-    padding: 0;
     font-family: 'Roboto', sans-serif;
-    background-color: #f2f2f2;
+    background-color: #898e2c;
+    min-height: 100vh;
+    padding: 20px 20px;
 }
 
 #startBtn, #stopBtn, #resumeBtn, #pheromonesBtn{
@@ -73,6 +74,7 @@ body{
     display: flex;
     flex-direction: row-reverse;
     justify-content: center;
+    align-items: center;
     background-color: #979b2f;
 }
 
@@ -106,7 +108,9 @@ p {
     width: var(--width);
     scale: 80%;
     top: 0;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #trees-canvas {
@@ -143,6 +147,10 @@ p {
 #StartGame {
     border-radius: 30px;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 table {
@@ -155,7 +163,7 @@ table {
 th, td {
     padding: 15px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+
 }
 
 /* Style de l'en-tête du tableau */
@@ -167,6 +175,19 @@ th {
 tr:nth-child(odd) {
     background-color: #e6e6e6; /* Couleur de fond légèrement plus foncée pour les lignes impaires */
 }
+
+
+#editableTable {
+    margin: 30px;
+    width: 348px;
+    border: 1px solid #523c3c;
+    border-radius: 5px;
+}
+th{
+    background-color: #f96757;
+    color: #ffe4e2;
+}
+
 
 
 
