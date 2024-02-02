@@ -1,5 +1,3 @@
-
-
 class TreeLayer {
     constructor(canvas, ctx, view) {
         this.view = view;
@@ -12,6 +10,7 @@ class TreeLayer {
         };
     }
 
+    /**********************************************************************************/
     init() {
         this.canvas.width = 755;
         this.canvas.height = 870;
@@ -21,6 +20,7 @@ class TreeLayer {
         this.spacingFactor = 0.31;
     }
 
+    /**********************************************************************************/
     display() {
         let overlayImage = new Image();
         overlayImage.src = '../../ressources/images/tree.png';

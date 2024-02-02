@@ -5,6 +5,7 @@ class PheromoneLayer {
         this.ctx = ctx;
     }
 
+    /**********************************************************************************/
     init() {
         this.cellWidth = 130;
         this.cellHeight = 150;
@@ -13,6 +14,7 @@ class PheromoneLayer {
         this.spacingFactor = 0.31;
     }
 
+    /**********************************************************************************/
     drawPheromones(displayMode) {
 
         let min = 0.5;
@@ -25,13 +27,11 @@ class PheromoneLayer {
                         if(displayMode === 2)
                         {
                             let max = 5;
-                            // Convertir la quantité de phéromones en une valeur de couleur RGB
                             let colorValue = Math.max(0, 255-Math.round((cell.pheromone / max) * 255));
                             this.ctx.fillStyle = `rgb(255, ${colorValue}, ${colorValue})`;
 
-                            // Dessiner la quantité de phéromones sur le canvas
                             this.ctx.fillText(
-                                cell.pheromone.toFixed(2), // Afficher la quantité de phéromones avec deux chiffres après la virgule
+                                cell.pheromone.toFixed(2),
                                 x * this.cellWidth * this.spacingFactor + this.cellWidth /5,
                                 y * this.cellHeight * this.spacingFactor + this.cellHeight /4
                             );
@@ -46,11 +46,11 @@ class PheromoneLayer {
                             let radius = 1 + normalizedPheromone * max;
                             this.ctx.beginPath();
                             this.ctx.arc(
-                                x * this.cellWidth * this.spacingFactor + this.cellWidth / 4, // Position x du centre du cercle
-                                y * this.cellHeight * this.spacingFactor + this.cellHeight / 4, // Position y du centre du cercle
-                                radius, // Rayon du cercle
-                                0, // Angle de départ
-                                2 * Math.PI // Angle de fin
+                                x * this.cellWidth * this.spacingFactor + this.cellWidth / 4,
+                                y * this.cellHeight * this.spacingFactor + this.cellHeight / 4,
+                                radius,
+                                0,
+                                2 * Math.PI
                             );
                             this.ctx.fill();
                         }

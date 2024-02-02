@@ -22,26 +22,32 @@ class Controller {
         this.view.bindGetGrid(this.bindGetGrid);
     }
 
+    /**********************************************************************************/
     bindGetAntLayer() {
         return this.view.getAntLayer();
     }
 
+    /**********************************************************************************/
     bindGetPheromoneLayer() {
         return this.view.getPheromoneLayer();
     }
 
+    /**********************************************************************************/
     bindGetTreeLayer() {
         return this.view.getTreeLayer();
     }
 
+    /**********************************************************************************/
     bindGetFoodLayer() {
         return this.view.getFoodLayer();
     }
 
+    /**********************************************************************************/
     bindGetCellGrid() {
         return this.model.getCellGrid();
     }
 
+    /**********************************************************************************/
     bindGetGrid() {
         return this.model.getGrid();
     }

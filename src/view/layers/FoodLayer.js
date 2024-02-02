@@ -8,6 +8,7 @@ class FoodLayer {
         this.scale = 0.2;
     }
 
+    /**********************************************************************************/
     init() {
         this.cellWidth = 130;
         this.cellHeight = 150;
@@ -16,6 +17,7 @@ class FoodLayer {
         this.spacingFactor = 0.31;
     }
 
+    /**********************************************************************************/
     drawFoods(foods){
         this.view.foodsCtx.clearRect(0, 0, this.view.foodsCanvas.width, this.view.foodsCanvas.height);
         for (let food of foods) {

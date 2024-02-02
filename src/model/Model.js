@@ -30,32 +30,40 @@ class Model {
         this.cellGrid = this.translateGrid();
     }
 
+    /**********************************************************************************/
+
     // Binding.
     bindDisplayCNF (callback) {
         // Définition d'une nouvelle propriété pouvant être utilisée à partir d'une instance de Model.
         this.DisplayCNF = callback; // On veut pouvoir actualiser la View (depuis le Controller) quand nous récupérons les données.
     }
 
+    /**********************************************************************************/
     bindDrawAnts (callback) {
         this.drawAnts = callback;
     }
 
+    /**********************************************************************************/
     bindGetAntLayer(callback) {
         this.getAntLayer = callback;
     }
 
+    /**********************************************************************************/
     bindGetPheromoneLayer(callback) {
         this.getPheromoneLayer = callback;
     }
 
+    /**********************************************************************************/
     bindGetTreeLayer(callback) {
         this.getTreeLayer = callback;
     }
 
+    /**********************************************************************************/
     bindGetFoodLayer(callback) {
         this.getFoodLayer = callback;
     }
 
+    /**********************************************************************************/
     getCNF () {
         fetch(this.URL)
             .then(response => response.json())
@@ -71,8 +79,8 @@ class Model {
             });
     }
 
+    /**********************************************************************************/
     decrementPheromones(cellGrid, factor) {
-        // Parcourir chaque cellule de la grille
         for (let y = 0; y < cellGrid.length; y++) {
             for (let x = 0; x < cellGrid[y].length; x++) {
                 let cell = cellGrid[y][x];
@@ -83,13 +91,14 @@ class Model {
         }
     }
 
+    /**********************************************************************************/
     startGame() {
-        // Récupérer les valeurs éditables du tableau
+        // Récupére les valeurs éditables du tableau
         const numberOfAnts = parseInt(document.querySelector('#editableTable tr:nth-child(2) td:last-child').innerText, 10) || 0;
         const numberOfFoods = parseInt(document.querySelector('#editableTable tr:nth-child(3) td:last-child').innerText, 10) || 0;
         const simulationSpeed = parseInt(document.querySelector('#editableTable tr:nth-child(4) td:last-child').innerText, 10) || 0;
 
-        // Démarrer le timer et le reste du jeu
+        // Démarre le timer et le reste du jeu
         this.startTimer();
         for (let i = 0; i < numberOfAnts; i++) {
             let ant = new Fourmi(9, 9, this);
@@ -98,7 +107,7 @@ class Model {
         // Food du tableau
         this.foods = this.generateFood(numberOfFoods, this.cellGrid[9][9]);
         this.getFoodLayer().drawFoods(this.foods);
-        // Speed du tableau
+
         setInterval(() => {
             if(app.isRunning)
             {
@@ -132,23 +141,22 @@ class Model {
         }, simulationSpeed);
     }
 
+    /**********************************************************************************/
     generateFood(nbFood, fourmiliere) {
         let availablePositions = [];
-        let fourmilierePosition = { x: fourmiliere.x, y: fourmiliere.y }; // Remplacez par la position réelle de la fourmilière
+        let fourmilierePosition = { x: fourmiliere.x, y: fourmiliere.y };
 
-        // Collecter toutes les positions disponibles
         for (let y = 0; y < this.grid.length; y++) {
             for (let x = 0; x < this.grid[y].length; x++) {
-                // Vérifier si la position est à une distance de plus d'une case de la fourmilière
                 if (this.grid[y][x] === 0 && Math.abs(x - fourmilierePosition.x) > 1 && Math.abs(y - fourmilierePosition.y) > 1) {
                     availablePositions.push({ x: x, y: y });
                 }
             }
         }
 
-        // Mélanger les positions disponibles
+        // Mélange les positions disponibles
         availablePositions = app.model.shuffleArray(availablePositions);
-        // Placer les images sur les positions aléatoires
+        // Place les images sur les positions aléatoires
         let foodsGenerated = []
         for (let i = 0; i < Math.min(nbFood, availablePositions.length); i++) {
             let foodPos = availablePositions.shift();
@@ -159,10 +167,12 @@ class Model {
         return foodsGenerated;
     }
 
+    /**********************************************************************************/
     stopTimer() {
         clearInterval(this.timerInterval);
     }
 
+    /**********************************************************************************/
     startTimer() {
         this.timerInterval = setInterval(function () {
             app.model.seconds++;
@@ -179,6 +189,7 @@ class Model {
         }, 1000);
     }
 
+    /**********************************************************************************/
     loadImages () {
         let startBtn = document.getElementById("startBtn");
         let pheromonesBtn = document.getElementById("pheromonesBtn");
@@ -233,6 +244,7 @@ class Model {
         }
     }
 
+    /**********************************************************************************/
     shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
             let j = Math.floor(Math.random() * (i + 1));
@@ -243,6 +255,7 @@ class Model {
         return array;
     }
 
+    /**********************************************************************************/
     translateGrid() {
         return this.grid.map((row, i) =>
             row.map((cell, j) => {
@@ -260,10 +273,12 @@ class Model {
         );
     }
 
+    /**********************************************************************************/
     getCellGrid(){
         return this.cellGrid;
     }
 
+    /**********************************************************************************/
     getGrid(){
         return this.grid;
     }

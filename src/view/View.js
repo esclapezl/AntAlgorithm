@@ -26,6 +26,7 @@ class View {
         this.init();
     }
 
+    /**********************************************************************************/
     init() {
         this.treeLayer.init();
         this.antLayer.init();
@@ -33,26 +34,32 @@ class View {
         this.pheromonesLayer.init();
     }
 
+    /**********************************************************************************/
     getTreeLayer() {
         return this.treeLayer;
     }
 
+    /**********************************************************************************/
     getPheromoneLayer() {
         return this.pheromonesLayer;
     }
 
+    /**********************************************************************************/
     getFoodLayer() {
         return this.foodLayer;
     }
 
+    /**********************************************************************************/
     getAntLayer() {
         return this.antLayer;
     }
 
+    /**********************************************************************************/
     bindGetCellGrid(callback) {
         this.getCellGrid = callback;
     }
 
+    /**********************************************************************************/
     bindGetGrid(callback) {
         this.getGrid = callback;
     }

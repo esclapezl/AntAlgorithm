@@ -11,13 +11,14 @@ class Cell {
 }
 
 /* Les classes filles */
-
+/**********************************************************************************/
 class Obstacle extends Cell {
     constructor(x, y) {
         super(x, y);
     }
 }
 
+/**********************************************************************************/
 class Free extends Cell {
     constructor(x, y) {
         super(x, y);
@@ -28,6 +29,7 @@ class Free extends Cell {
 
 }
 
+/**********************************************************************************/
 class Fourmiliere extends Cell {
     constructor(x, y) {
         super(x, y);
@@ -40,6 +42,7 @@ class Fourmiliere extends Cell {
     }
 }
 
+/**********************************************************************************/
 class Food extends Cell {
     constructor(x, y) {
         super(x, y);

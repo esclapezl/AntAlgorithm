@@ -14,6 +14,7 @@ class Fourmi {
         this.lastfood = false;
     }
 
+    /**********************************************************************************/
     pickUp(foodCell) {
         if (this.carrying < this.capacity) {
             this.path.push(this.model.cellGrid[this.y][this.x]);
@@ -23,7 +24,6 @@ class Fourmi {
             if(foodCell.quantity === 0){
                 this.model.cellGrid[foodCell.y][foodCell.x] = new Free(foodCell.x, foodCell.y);
                 this.model.foods = this.model.foods.filter(food => food !== foodCell);
-                //this.deleteAllPheromones(this.path);
                 this.lastfood = true;
             }
             this.model.getFoodLayer().drawFoods(this.model.foods);
@@ -33,6 +33,7 @@ class Fourmi {
         }
     }
 
+    /**********************************************************************************/
     dropOff(startingPoint) {
         this.carrying = 0;
         if(!this.lastfood) {
@@ -45,10 +46,12 @@ class Fourmi {
         this.pathToHome = [];
     }
 
+    /**********************************************************************************/
     isAtCenter() {
         return this.x % 1 === 0 && this.y % 1 === 0;
     }
 
+    /**********************************************************************************/
     scanArea(grid) {
         let possibilites = [];
         let acceptedCellTypes = ["Free", "Food", "Fourmiliere"];
@@ -72,6 +75,7 @@ class Fourmi {
         return possibilites;
     }
 
+    /**********************************************************************************/
     chose(possibilites) {
         let pheromoneCells = possibilites.filter(cell => cell.pheromone > 0);
         let inexplorees = possibilites.filter(location => !this.path.some(cell => cell.x === location.x && cell.y === location.y));
@@ -82,8 +86,6 @@ class Fourmi {
             let lastFourCells = this.path.slice(-4);
             if (lastFourCells[0].x === lastFourCells[2].x && lastFourCells[0].y === lastFourCells[2].y &&
                 lastFourCells[1].x === lastFourCells[3].x && lastFourCells[1].y === lastFourCells[3].y) {
-                // this.deletePheromones(lastFourCells[0]);
-                // this.deletePheromones(lastFourCells[1]);
             }
         }
 
@@ -108,6 +110,7 @@ class Fourmi {
         }
     }
 
+    /**********************************************************************************/
     checkObjective(cell){
         if (this.carrying > 0 && cell.GetType() === "Fourmiliere") {
             this.dropOff(cell);
@@ -115,6 +118,8 @@ class Fourmi {
             this.pickUp(cell);
         }
     }
+
+    /**********************************************************************************/
     moveToward(cell) {
         if(this.x === cell.x){
             if(this.y > cell.y){
@@ -135,6 +140,8 @@ class Fourmi {
             }
         }
     }
+
+    /**********************************************************************************/
     move(){
         switch(this.direction) {
             case 0: // gauche
@@ -152,6 +159,7 @@ class Fourmi {
         }
     }
 
+    /**********************************************************************************/
     goHome() {
         if (this.pathToHome.length > 0) {
             return this.pathToHome[0];
@@ -159,10 +167,12 @@ class Fourmi {
         return null;
     }
 
+    /**********************************************************************************/
     nextCellToHome() {
         this.pathToHome.shift();
     }
 
+    /**********************************************************************************/
     dijkstra() {
         let openList = [];
         let closedList = [];
@@ -218,6 +228,7 @@ class Fourmi {
         return null;
     }
 
+    /**********************************************************************************/
     getNeighbors(cell) {
         let neighbors = [];
         let directions = [
@@ -236,6 +247,7 @@ class Fourmi {
         return neighbors;
     }
 
+    /**********************************************************************************/
     layPheromones(quantity,path){
         let pheromoneFraction = quantity / path.length;
         for (let cell of path) {
@@ -244,12 +256,14 @@ class Fourmi {
         }
     }
 
+    /**********************************************************************************/
     deleteAllPheromones(path){
         for (let cell of path) {
             this.model.cellGrid[cell.y][cell.x].pheromone = 0;
         }
     }
 
+    /**********************************************************************************/
     deletePheromones(cell){
         this.model.cellGrid[cell.y][cell.x].pheromone = 0;
     }
