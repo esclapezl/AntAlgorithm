@@ -14,7 +14,7 @@ class PheromoneLayer {
     }
 
     drawPheromones(displayMode) {
-        let max = 1;
+
         let min = 0.5;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         if(displayMode !== 0){
@@ -24,9 +24,10 @@ class PheromoneLayer {
                     if (cell.GetType() === 'Free') {
                         if(displayMode === 2)
                         {
+                            let max = 5;
                             // Convertir la quantité de phéromones en une valeur de couleur RGB
-                            let colorValue = Math.min(255, Math.round((cell.pheromone / max) * 255));
-                            this.ctx.fillStyle = `rgb(${colorValue}, 0, 0)`;
+                            let colorValue = Math.max(0, 255-Math.round((cell.pheromone / max) * 255));
+                            this.ctx.fillStyle = `rgb(255, ${colorValue}, ${colorValue})`;
 
                             // Dessiner la quantité de phéromones sur le canvas
                             this.ctx.fillText(
@@ -37,10 +38,12 @@ class PheromoneLayer {
                         }
                         else
                         {
+                            let max = 20;
                             let colorValue = Math.max(0, 255- Math.round((cell.pheromone / max) * 255));
                             this.ctx.fillStyle = `rgb(255, ${colorValue}, ${colorValue})`;
 
-                            let radius = 1+Math.log(Math.max(cell.pheromone + min, 1)) * 5;
+                            let normalizedPheromone = Math.log1p(cell.pheromone) / Math.log1p(max);
+                            let radius = 1 + normalizedPheromone * max;
                             this.ctx.beginPath();
                             this.ctx.arc(
                                 x * this.cellWidth * this.spacingFactor + this.cellWidth / 4, // Position x du centre du cercle

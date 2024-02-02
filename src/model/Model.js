@@ -188,16 +188,19 @@ class Model {
                 if (app.model.pheromoneMode === 0) {
                     pheromoneImg.src = "../../ressources/images/digits.png";
                     app.model.pheromoneMode = 1;
+                    app.view.pheromonesLayer.drawPheromones(app.model.pheromoneMode);
                 }
                 else if(app.model.pheromoneMode === 1)
                 {
                     pheromoneImg.src = "../../ressources/images/erase.png";
                     app.model.pheromoneMode = 2;
+                    app.view.pheromonesLayer.drawPheromones(app.model.pheromoneMode);
                 }
                 else
                 {
                     pheromoneImg.src = "../../ressources/images/pheromone.png";
                     app.model.pheromoneMode = 0;
+                    app.view.pheromonesLayer.drawPheromones(app.model.pheromoneMode);
                 }
             });
         }
