@@ -109,7 +109,7 @@ class Model {
         this.getFoodLayer().drawFoods(this.foods);
 
         setInterval(() => {
-            if(app.isRunning)
+            if(this.isRunning)
             {
                 for (let fourmi of this.fourmis) {
                     if(fourmi.isAtCenter()){
@@ -132,11 +132,11 @@ class Model {
                     }
 
                 }
-                app.view.antLayer.drawAnts(this.fourmis);
+                this.getAntLayer().drawAnts(this.fourmis);
 
-                app.view.pheromonesLayer.drawPheromones(this.pheromoneMode);
+                this.getPheromoneLayer().drawPheromones(this.pheromoneMode);
 
-                app.model.decrementPheromones(this.cellGrid, 0.0005);
+                this.decrementPheromones(this.cellGrid, 0.0005);
             }
         }, simulationSpeed);
     }
@@ -155,7 +155,7 @@ class Model {
         }
 
         // Mélange les positions disponibles
-        availablePositions = app.model.shuffleArray(availablePositions);
+        availablePositions = this.shuffleArray(availablePositions);
         // Place les images sur les positions aléatoires
         let foodsGenerated = []
         for (let i = 0; i < Math.min(nbFood, availablePositions.length); i++) {
@@ -174,17 +174,17 @@ class Model {
 
     /**********************************************************************************/
     startTimer() {
-        this.timerInterval = setInterval(function () {
-            app.model.seconds++;
-            if (app.model.seconds === 60) {
-                app.model.seconds = 0;
-                app.model.minutes++;
+        this.timerInterval = setInterval(() => {
+            this.seconds++;
+            if (this.seconds === 60) {
+                this.seconds = 0;
+                this.minutes++;
             }
 
             let timerElement = document.getElementById("timer");
             if (timerElement) {
-                timerElement.innerText = (app.model.minutes < 10 ? "0" : "") + app.model.minutes + ":" +
-                    (app.model.seconds < 10 ? "0" : "") + app.model.seconds;
+                timerElement.innerText = (this.minutes < 10 ? "0" : "") + this.minutes + ":" +
+                    (this.seconds < 10 ? "0" : "") + this.seconds;
             }
         }, 1000);
     }
@@ -196,49 +196,49 @@ class Model {
 
         if (startBtn &&  pheromonesBtn) {
             let startStopImg = document.getElementById("startStopButton");
-            startBtn.addEventListener("click", function () { //start
-                if(!app.model.startBtnClicked) {
-                    app.model.startGame();
-                    app.model.startBtnClicked = true;
-                    app.model.togglePause = true;
-                    app.isRunning = true;
+            startBtn.addEventListener("click", () => { //start
+                if(!this.startBtnClicked) {
+                    this.startGame();
+                    this.startBtnClicked = true;
+                    this.togglePause = true;
+                    this.isRunning = true;
                     startStopImg.src = "../../ressources/images/stop.png";
                 }
-                else if(app.model.togglePause) //stop
+                else if(this.togglePause) //stop
                 {
-                    app.model.stopTimer();
-                    app.isRunning = false;
-                    app.model.togglePause = false;
+                    this.stopTimer();
+                    this.isRunning = false;
+                    this.togglePause = false;
                     startStopImg.src = "../../ressources/images/start.png";
                 }
                 else //resume
                 {
-                    app.model.startTimer();
-                    app.isRunning = true;
-                    app.model.togglePause = true;
+                    this.startTimer();
+                    this.isRunning = true;
+                    this.togglePause = true;
                     startStopImg.src = "../../ressources/images/stop.png";
                 }
             });
 
             this.pheromoneMode = 0;
-            pheromonesBtn.addEventListener("click", function () {
+            pheromonesBtn.addEventListener("click", () => {
                 let pheromoneImg = document.getElementById("pheromoneButton");
-                if (app.model.pheromoneMode === 0) {
+                if (this.pheromoneMode === 0) {
                     pheromoneImg.src = "../../ressources/images/digits.png";
-                    app.model.pheromoneMode = 1;
-                    app.view.pheromonesLayer.drawPheromones(app.model.pheromoneMode);
+                    this.pheromoneMode = 1;
+                    this.getPheromoneLayer().drawPheromones(this.pheromoneMode);
                 }
-                else if(app.model.pheromoneMode === 1)
+                else if(this.pheromoneMode === 1)
                 {
                     pheromoneImg.src = "../../ressources/images/erase.png";
-                    app.model.pheromoneMode = 2;
-                    app.view.pheromonesLayer.drawPheromones(app.model.pheromoneMode);
+                    this.pheromoneMode = 2;
+                    this.getPheromoneLayer().drawPheromones(this.pheromoneMode);
                 }
                 else
                 {
                     pheromoneImg.src = "../../ressources/images/pheromone.png";
-                    app.model.pheromoneMode = 0;
-                    app.view.pheromonesLayer.drawPheromones(app.model.pheromoneMode);
+                    this.pheromoneMode = 0;
+                    this.getPheromoneLayer().drawPheromones(this.pheromoneMode);
                 }
             });
         }

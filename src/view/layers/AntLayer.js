@@ -19,11 +19,11 @@ class AntLayer {
 
     /**********************************************************************************/
     drawAnts (fourmis){
-        app.view.antsCtx.clearRect(0, 0, app.view.antsCanvas.width, app.view.antsCanvas.height); // clear the canvas
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // clear the canvas
         for (let fourmi of fourmis) {
-            app.view.antsCtx.save();
+            this.ctx.save();
 
-            app.view.antsCtx.translate(fourmi.x * (130 * 0.31) + app.view.antLayer.antImage.width / 2, fourmi.y * (150  * 0.31) + app.view.antLayer.antImage.height / 2 + 5);
+            this.ctx.translate(fourmi.x * (130 * 0.31) + this.antImage.width / 2, fourmi.y * (150  * 0.31) + this.antImage.height / 2 + 5);
             let angle;
             switch(fourmi.direction) {
                 case 0: angle = 0; break; // gauche
@@ -31,24 +31,24 @@ class AntLayer {
                 case 2: angle = Math.PI; break; // droite
                 case 3: angle = 3 * Math.PI / 2; break; // bas
             }
-            app.view.antsCtx.rotate(angle);
+            this.ctx.rotate(angle);
 
-            app.view.antsCtx.drawImage(
-                app.view.antLayer.antImage,
-                -app.view.antLayer.antImage.width / 2 * fourmi.size,
-                -app.view.antLayer.antImage.height / 2 * fourmi.size,
-                app.view.antLayer.antImage.width * fourmi.size,
-                app.view.antLayer.antImage.height * fourmi.size
+            this.ctx.drawImage(
+                this.antImage,
+                -this.antImage.width / 2 * fourmi.size,
+                -this.antImage.height / 2 * fourmi.size,
+                this.antImage.width * fourmi.size,
+                this.antImage.height * fourmi.size
             );
 
             if (fourmi.carrying > 0) {
-                app.view.antsCtx.beginPath();
-                app.view.antsCtx.arc(0, 0, fourmi.size * 10, 0, 2 * Math.PI, false);
-                app.view.antsCtx.fillStyle = 'yellow';
-                app.view.antsCtx.fill();
+                this.ctx.beginPath();
+                this.ctx.arc(0, 0, fourmi.size * 10, 0, 2 * Math.PI, false);
+                this.ctx.fillStyle = 'yellow';
+                this.ctx.fill();
             }
 
-            app.view.antsCtx.restore();
+            this.ctx.restore();
         }
     }
 }
