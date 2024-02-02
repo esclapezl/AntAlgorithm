@@ -1,5 +1,6 @@
 class Fourmi {
-    constructor(x,y) {
+    constructor(x,y, model) {
+        this.model = model;
         this.x = x;
         this.y = y;
         this.size = 0.3;
@@ -15,17 +16,17 @@ class Fourmi {
 
     pickUp(foodCell) {
         if (this.carrying < this.capacity) {
-            this.path.push(app.cellGrid[this.y][this.x]);
+            this.path.push(this.model.cellGrid[this.y][this.x]);
             let amount = Math.min(this.capacity - this.carrying, foodCell.quantity);
             this.carrying += amount;
             foodCell.quantity -= amount;
             if(foodCell.quantity === 0){
-                app.cellGrid[foodCell.y][foodCell.x] = new Free(foodCell.x, foodCell.y);
-                foods = foods.filter(food => food !== foodCell);
+                this.model.cellGrid[foodCell.y][foodCell.x] = new Free(foodCell.x, foodCell.y);
+                this.model.foods = this.model.foods.filter(food => food !== foodCell);
                 this.deleteAllPheromones(this.path);
                 this.lastfood = true;
             }
-            app.view.foodLayer.drawFoods(foods);
+            this.model.getFoodLayer().drawFoods(this.model.foods);
             this.pathToHome = this.dijkstra()
             this.pathToHome.shift();
             this.path = this.pathToHome.slice();
@@ -75,7 +76,7 @@ class Fourmi {
         let pheromoneCells = possibilites.filter(cell => cell.pheromone > 0);
         let inexplorees = possibilites.filter(location => !this.path.some(cell => cell.x === location.x && cell.y === location.y));
         let foodCells = possibilites.filter(cell => cell.GetType() === "Food");
-        this.path.push(app.cellGrid[this.y][this.x]);
+        this.path.push(this.model.cellGrid[this.y][this.x]);
 
         if (this.path.length >= 4) {
             let lastFourCells = this.path.slice(-4);
@@ -238,19 +239,19 @@ class Fourmi {
     layPheromones(quantity,path){
         let pheromoneFraction = quantity / path.length;
         for (let cell of path) {
-            app.cellGrid[cell.y][cell.x].pheromone += pheromoneFraction;
+            this.model.cellGrid[cell.y][cell.x].pheromone += pheromoneFraction;
             pheromoneFraction *= 0.95;
         }
     }
 
     deleteAllPheromones(path){
         for (let cell of path) {
-            app.cellGrid[cell.y][cell.x].pheromone = 0;
+            this.model.cellGrid[cell.y][cell.x].pheromone = 0;
         }
     }
 
     deletePheromones(cell){
-        app.cellGrid[cell.y][cell.x].pheromone = 0;
+        this.model.cellGrid[cell.y][cell.x].pheromone = 0;
     }
 
 }

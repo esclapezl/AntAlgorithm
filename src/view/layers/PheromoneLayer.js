@@ -1,5 +1,6 @@
 class PheromoneLayer {
-    constructor(canvas, ctx) {
+    constructor(canvas, ctx, view) {
+        this.view = view;
         this.canvas = canvas;
         this.ctx = ctx;
     }
@@ -12,15 +13,14 @@ class PheromoneLayer {
         this.spacingFactor = 0.31;
     }
 
-    drawPheromones(cellGrid, displayMode) {
+    drawPheromones(displayMode) {
         let max = 1;
         let min = 0.5;
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         if(displayMode !== 0){
-            for (let y = 0; y < cellGrid.length; y++) {
-                for (let x = 0; x < cellGrid[y].length; x++) {
-                    let cell = cellGrid[y][x];
-                    // Vérifier si la cellule est de type Free
+            for (let y = 0; y < this.view.getCellGrid().length; y++) {
+                for (let x = 0; x < this.view.getCellGrid()[y].length; x++) {
+                    let cell = this.view.getCellGrid()[y][x];
                     if (cell.GetType() === 'Free') {
                         if(displayMode === 2)
                         {
@@ -56,9 +56,5 @@ class PheromoneLayer {
                 }
             }
         }
-    }
-
-    togglePheromonesVisibility() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 }

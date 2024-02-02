@@ -1,5 +1,6 @@
 class FoodLayer {
-    constructor(canvas, ctx) {
+    constructor(canvas, ctx, view) {
+        this.view = view;
         this.canvas = canvas;
         this.ctx = ctx;
         this.foodImage = new Image();
@@ -16,14 +17,14 @@ class FoodLayer {
     }
 
     generateFood(nbFood, fourmiliere) {
-        var availablePositions = [];
-        var fourmilierePosition = { x: fourmiliere.x, y: fourmiliere.y }; // Remplacez par la position réelle de la fourmilière
+        let availablePositions = [];
+        let fourmilierePosition = { x: fourmiliere.x, y: fourmiliere.y }; // Remplacez par la position réelle de la fourmilière
 
         // Collecter toutes les positions disponibles
-        for (var y = 0; y < app.grid.length; y++) {
-            for (var x = 0; x < app.grid[y].length; x++) {
+        for (let y = 0; y < this.view.getCellGrid.length; y++) {
+            for (let x = 0; x < this.view.getCellGrid[y].length; x++) {
                 // Vérifier si la position est à une distance de plus d'une case de la fourmilière
-                if (app.grid[y][x] === 0 && Math.abs(x - fourmilierePosition.x) > 1 && Math.abs(y - fourmilierePosition.y) > 1) {
+                if (this.view.getGrid[y][x] === 0 && Math.abs(x - fourmilierePosition.x) > 1 && Math.abs(y - fourmilierePosition.y) > 1) {
                     availablePositions.push({ x: x, y: y });
                 }
             }
@@ -33,17 +34,17 @@ class FoodLayer {
         availablePositions = app.model.shuffleArray(availablePositions);
         // Placer les images sur les positions aléatoires
         let foodsGenerated = []
-        for (var i = 0; i < Math.min(nbFood, availablePositions.length); i++) {
+        for (let i = 0; i < Math.min(nbFood, availablePositions.length); i++) {
             let foodPos = availablePositions.shift();
             let food = new Food(foodPos.x, foodPos.y, 1);
-            app.cellGrid[food.y][food.x] = food;
+            this.view.getGrid[food.y][food.x] = food;
             foodsGenerated.push(food);
         }
         return foodsGenerated;
     }
 
     drawFoods(foods){
-        app.view.foodsCtx.clearRect(0, 0, app.view.foodsCanvas.width, app.view.foodsCanvas.height);
+        this.view.foodsCtx.clearRect(0, 0, this.view.foodsCanvas.width, this.view.foodsCanvas.height);
         for (let food of foods) {
             let scale = (0.2 + this.scale * food.quantity) / 2;
             let imageWidth = this.cellWidth * scale;

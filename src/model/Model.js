@@ -5,6 +5,29 @@ class Model {
         this.seconds = 0;
         this.minutes = 0;
         this.startBtnClicked = false;
+        this.fourmis = [];
+        this.foods = [];
+        this.grid = [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1],
+            [1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1],
+            [1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1],
+            [1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+            [1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1],
+            [1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 1, 0, 1, 1, 1, 1],
+            [1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1],
+            [1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1],
+            [1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1],
+            [1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1],
+            [1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        ];
+        this.cellGrid = this.translateGrid();
     }
 
     // Binding.
@@ -15,6 +38,22 @@ class Model {
 
     bindDrawAnts (callback) {
         this.drawAnts = callback;
+    }
+
+    bindGetAntLayer(callback) {
+        this.getAntLayer = callback;
+    }
+
+    bindGetPheromoneLayer(callback) {
+        this.getPheromoneLayer = callback;
+    }
+
+    bindGetTreeLayer(callback) {
+        this.getTreeLayer = callback;
+    }
+
+    bindGetFoodLayer(callback) {
+        this.getFoodLayer = callback;
     }
 
     getCNF () {
@@ -52,23 +91,22 @@ class Model {
 
         // Démarrer le timer et le reste du jeu
         this.startTimer();
-        // Fourmis du tableau
         for (let i = 0; i < numberOfAnts; i++) {
-            let ant = new Fourmi(9, 9);
-            fourmis.push(ant);
+            let ant = new Fourmi(9, 9, this);
+            this.fourmis.push(ant);
         }
         // Food du tableau
-        foods = app.view.foodLayer.generateFood(numberOfFoods, app.cellGrid[9][9]);
-        app.view.foodLayer.drawFoods(foods);
+        this.foods = this.getFoodLayer().generateFood(numberOfFoods, this.cellGrid[9][9]);
+        this.getFoodLayer().drawFoods(this.foods);
         // Speed du tableau
         setInterval(() => {
             if(app.isRunning)
             {
-                for (let fourmi of fourmis) {
+                for (let fourmi of this.fourmis) {
                     if(fourmi.isAtCenter()){
-                        fourmi.checkObjective(app.cellGrid[fourmi.y][fourmi.x]);
+                        fourmi.checkObjective(this.cellGrid[fourmi.y][fourmi.x]);
                         if (fourmi.carrying === 0) {
-                            fourmi.moveToward(fourmi.chose(fourmi.scanArea(app.cellGrid)));
+                            fourmi.moveToward(fourmi.chose(fourmi.scanArea(this.cellGrid)));
                         } else {
                             if(fourmi.isAtCenter()
                                 && fourmi.x === fourmi.goHome().x
@@ -85,11 +123,11 @@ class Model {
                     }
 
                 }
-                app.view.antLayer.drawAnts(fourmis);
+                app.view.antLayer.drawAnts(this.fourmis);
 
-                app.view.pheromonesLayer.drawPheromones(app.cellGrid, this.pheromoneMode);
+                app.view.pheromonesLayer.drawPheromones(this.pheromoneMode);
 
-                app.model.decrementPheromones(app.cellGrid, 0.0005);
+                app.model.decrementPheromones(this.cellGrid, 0.0005);
             }
         }, simulationSpeed);
     }
@@ -175,4 +213,28 @@ class Model {
         return array;
     }
 
+    translateGrid() {
+        return this.grid.map((row, i) =>
+            row.map((cell, j) => {
+                switch (cell) {
+                    case 0:
+                        return new Free(j, i);
+                    case 1:
+                        return new Obstacle(j, i);
+                    case 2:
+                        return new Fourmiliere(j, i);
+                    default:
+                        return new Cell(j, i);
+                }
+            })
+        );
+    }
+
+    getCellGrid(){
+        return this.cellGrid;
+    }
+
+    getGrid(){
+        return this.grid;
+    }
 }

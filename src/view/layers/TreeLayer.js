@@ -1,7 +1,8 @@
 
 
 class TreeLayer {
-    constructor(canvas, ctx) {
+    constructor(canvas, ctx, view) {
+        this.view = view;
         this.canvas = canvas;
         this.ctx = ctx;
         this.treeImage = new Image();
@@ -9,26 +10,6 @@ class TreeLayer {
         this.treeImage.onload = () => {
             this.display();
         };
-        this.grid = [
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1],
-            [1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1],
-            [1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1],
-            [1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1],
-            [1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1],
-            [1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1],
-            [1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1],
-            [1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1],
-            [1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1],
-            [1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1],
-            [1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-        ];
     }
 
     init() {
@@ -44,13 +25,12 @@ class TreeLayer {
         let overlayImage = new Image();
         overlayImage.src = '../../ressources/images/tree.png';
         overlayImage.onload = () => {
-
-            for (let i = 0; i < this.grid.length; i++) {
-                for (let j = 0; j < this.grid[0].length; j++) {
+            for (let i = 0; i < this.view.getGrid().length; i++) {
+                for (let j = 0; j < this.view.getGrid()[0].length; j++) {
                     let x = Math.floor(j * this.cellWidth * this.spacingFactor);
                     let y = Math.floor(i * this.cellHeight * this.spacingFactor);
 
-                    if (this.grid[i][j] === 1) {
+                    if (this.view.getGrid()[i][j] === 1) {
                         this.ctx.save();
                         this.ctx.translate(x, y);
                         let scaleRatio = 0.45;

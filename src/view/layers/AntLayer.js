@@ -1,5 +1,6 @@
 class AntLayer {
-    constructor(canvas, ctx) {
+    constructor(canvas, ctx, view) {
+        this.view = view;
         this.canvas = canvas;
         this.ctx = ctx;
         this.antImage = new Image();
