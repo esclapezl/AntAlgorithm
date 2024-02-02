@@ -1,3 +1,5 @@
+Salaun Kerrian - Esclapez Loïc
+
 Le projet s'ouvre via antAlgorithm.html
 
 extensions du projet :
