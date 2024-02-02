@@ -128,7 +128,7 @@ class Model {
                     app.isRunning = true;
                     startStopImg.src = "../../ressources/images/stop.png";
                 }
-                else if(this.togglePause) //stop
+                else if(app.model.togglePause) //stop
                 {
                     app.model.stopTimer();
                     app.isRunning = false;

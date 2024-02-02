@@ -63,8 +63,6 @@ class Controller {
                         return new Obstacle(j, i);
                     case 2:
                         return new Fourmiliere(j, i);
-                    case 3:
-                        return new Objective(j, i);
                     default:
                         return new Cell(j, i);
                 }

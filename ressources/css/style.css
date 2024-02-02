@@ -24,9 +24,13 @@ body{
     padding: 10px;
     background-color: #f96757;
     color: #ffe4e2;
-    border: 1px solid #523c3c;
     border-radius: 5px;
     cursor: pointer;
+}
+
+button {
+    border: none;
+    outline: none;
 }
 
 #startBtn:hover,
@@ -34,6 +38,15 @@ body{
     background-color: #ffe4e2;
     color: #f96757;
     font-weight: bold;
+
+}
+
+button > img {
+    filter: invert(1);
+}
+
+button:hover > img {
+    filter: invert(0);
 }
 
 #buttons{
@@ -187,7 +200,6 @@ tr:nth-child(odd) {
 #editableTable {
     margin: 30px;
     width: 348px;
-    border: 1px solid #523c3c;
     border-radius: 5px;
 }
 th{
