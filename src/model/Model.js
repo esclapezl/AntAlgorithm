@@ -100,16 +100,16 @@ class Model {
 
     startTimer() {
         this.timerInterval = setInterval(function () {
-            this.seconds++;
-            if (this.seconds === 60) {
-                this.seconds = 0;
-                this.minutes++;
+            app.model.seconds++;
+            if (app.model.seconds === 60) {
+                app.model.seconds = 0;
+                app.model.minutes++;
             }
 
             let timerElement = document.getElementById("timer");
             if (timerElement) {
-                timerElement.innerText = (this.minutes < 10 ? "0" : "") + this.minutes + ":" +
-                    (this.seconds < 10 ? "0" : "") + this.seconds;
+                timerElement.innerText = (app.model.minutes < 10 ? "0" : "") + app.model.minutes + ":" +
+                    (app.model.seconds < 10 ? "0" : "") + app.model.seconds;
             }
         }, 1000);
     }
@@ -121,10 +121,10 @@ class Model {
         if (startBtn &&  pheromonesBtn) {
             let startStopImg = document.getElementById("startStopButton");
             startBtn.addEventListener("click", function () { //start
-                if(!this.startBtnClicked) {
+                if(!app.model.startBtnClicked) {
                     app.model.startGame();
-                    this.startBtnClicked = true;
-                    this.togglePause = true;
+                    app.model.startBtnClicked = true;
+                    app.model.togglePause = true;
                     app.isRunning = true;
                     startStopImg.src = "../../ressources/images/stop.png";
                 }
@@ -132,14 +132,14 @@ class Model {
                 {
                     app.model.stopTimer();
                     app.isRunning = false;
-                    this.togglePause = false;
+                    app.model.togglePause = false;
                     startStopImg.src = "../../ressources/images/start.png";
                 }
                 else //resume
                 {
                     app.model.startTimer();
                     app.isRunning = true;
-                    this.togglePause = true;
+                    app.model.togglePause = true;
                     startStopImg.src = "../../ressources/images/stop.png";
                 }
             });
@@ -147,28 +147,28 @@ class Model {
             this.pheromoneMode = 0;
             pheromonesBtn.addEventListener("click", function () {
                 let pheromoneImg = document.getElementById("pheromoneButton");
-                if (this.pheromoneMode === 0) {
+                if (app.model.pheromoneMode === 0) {
                     pheromoneImg.src = "../../ressources/images/digits.png";
-                    this.pheromoneMode = 1;
+                    app.model.pheromoneMode = 1;
                 }
-                else if(this.pheromoneMode === 1)
+                else if(app.model.pheromoneMode === 1)
                 {
                     pheromoneImg.src = "../../ressources/images/erase.png";
-                    this.pheromoneMode = 2;
+                    app.model.pheromoneMode = 2;
                 }
                 else
                 {
                     pheromoneImg.src = "../../ressources/images/pheromone.png";
-                    this.pheromoneMode = 0;
+                    app.model.pheromoneMode = 0;
                 }
             });
         }
     }
 
     shuffleArray(array) {
-        for (var i = array.length - 1; i > 0; i--) {
-            var j = Math.floor(Math.random() * (i + 1));
-            var temp = array[i];
+        for (let i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            let temp = array[i];
             array[i] = array[j];
             array[j] = temp;
         }
