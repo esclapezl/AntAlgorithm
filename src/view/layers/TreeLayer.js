@@ -4,7 +4,7 @@ class TreeLayer {
         this.canvas = canvas;
         this.ctx = ctx;
         this.treeImage = new Image();
-        this.treeImage.src = '../../ressources/images/shadow.png';
+        this.treeImage.src = 'ressources/images/shadow.png';
         this.treeImage.onload = () => {
             this.display();
         };
@@ -23,7 +23,7 @@ class TreeLayer {
     /**********************************************************************************/
     display() {
         let overlayImage = new Image();
-        overlayImage.src = '../../ressources/images/tree.png';
+        overlayImage.src = 'ressources/images/tree.png';
         overlayImage.onload = () => {
             for (let i = 0; i < this.view.getGrid().length; i++) {
                 for (let j = 0; j < this.view.getGrid()[0].length; j++) {
@@ -59,7 +59,7 @@ class TreeLayer {
                         this.ctx.restore();
                     } else if (i === 9 && j === 9) {
                         let newTreeImage = new Image();
-                        newTreeImage.src = '../../ressources/images/fourmiliere.png';
+                        newTreeImage.src = 'ressources/images/fourmiliere.png';
                         newTreeImage.onload = () => {
                             const scaleRatioFourmiliere = 0.20;
                             this.ctx.save();

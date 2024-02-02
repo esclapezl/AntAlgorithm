@@ -173,21 +173,21 @@ class Model {
                     this.startBtnClicked = true;
                     this.togglePause = true;
                     this.isRunning = true;
-                    startStopImg.src = "../../ressources/images/stop.png";
+                    startStopImg.src = "ressources/images/stop.png";
                 }
                 else if(this.togglePause) //stop
                 {
                     this.stopTimer();
                     this.isRunning = false;
                     this.togglePause = false;
-                    startStopImg.src = "../../ressources/images/start.png";
+                    startStopImg.src = "ressources/images/start.png";
                 }
                 else //resume
                 {
                     this.startTimer();
                     this.isRunning = true;
                     this.togglePause = true;
-                    startStopImg.src = "../../ressources/images/stop.png";
+                    startStopImg.src = "ressources/images/stop.png";
                 }
             });
 
@@ -195,19 +195,19 @@ class Model {
             pheromonesBtn.addEventListener("click", () => {
                 let pheromoneImg = document.getElementById("pheromoneButton");
                 if (this.pheromoneMode === 0) {
-                    pheromoneImg.src = "../../ressources/images/digits.png";
+                    pheromoneImg.src = "ressources/images/digits.png";
                     this.pheromoneMode = 1;
                     this.getPheromoneLayer().drawPheromones(this.pheromoneMode);
                 }
                 else if(this.pheromoneMode === 1)
                 {
-                    pheromoneImg.src = "../../ressources/images/erase.png";
+                    pheromoneImg.src = "ressources/images/erase.png";
                     this.pheromoneMode = 2;
                     this.getPheromoneLayer().drawPheromones(this.pheromoneMode);
                 }
                 else
                 {
-                    pheromoneImg.src = "../../ressources/images/pheromone.png";
+                    pheromoneImg.src = "ressources/images/pheromone.png";
                     this.pheromoneMode = 0;
                     this.getPheromoneLayer().drawPheromones(this.pheromoneMode);
                 }

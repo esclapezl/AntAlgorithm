@@ -4,7 +4,7 @@ class FoodLayer {
         this.canvas = canvas;
         this.ctx = ctx;
         this.foodImage = new Image();
-        this.foodImage.src = '../../ressources/images/ble.png';
+        this.foodImage.src = 'ressources/images/ble.png';
         this.scale = 0.2;
     }
 

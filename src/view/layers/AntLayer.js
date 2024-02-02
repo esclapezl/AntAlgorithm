@@ -4,7 +4,7 @@ class AntLayer {
         this.canvas = canvas;
         this.ctx = ctx;
         this.antImage = new Image();
-        this.antImage.src = '../../ressources/tiles/ant.png';
+        this.antImage.src = 'ressources/tiles/ant.png';
         this.scale = 0.2;
     }
 
