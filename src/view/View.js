@@ -49,13 +49,6 @@ class View {
         return this.antLayer;
     }
 
-    drawFood(foods){
-        app.view.foodsCtx.clearRect(0, 0, app.view.antsCanvas.width, app.view.antsCanvas.height); // clear the canvas
-        for (let food of foods) {
-
-        }
-    }
-
     bindGetCellGrid(callback) {
         this.getCellGrid = callback;
     }
