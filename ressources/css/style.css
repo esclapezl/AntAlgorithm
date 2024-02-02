@@ -20,7 +20,7 @@ body{
 
 #startBtn, #stopBtn, #resumeBtn, #pheromonesBtn{
     margin-top: 10px;
-    width: 100px;
+    width: 55px;
     padding: 10px;
     background-color: #f96757;
     color: #ffe4e2;
@@ -36,9 +36,21 @@ body{
     font-weight: bold;
 }
 
-#startBtn {
-
+#buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
+
+#small_buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
 
 #stopBtn {
     margin-left: 20px;
@@ -46,11 +58,6 @@ body{
 
 #resumeBtn {
     margin-left: 20px;
-}
-
-#pheromonesBtn {
-
-    width: 348px;
 }
 
 #labyrinthe td {

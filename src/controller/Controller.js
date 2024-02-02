@@ -86,14 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
     app.view.foodLayer.init();
     Chargement.loadImages(app.view.treeLayer);
 });
-window.addEventListener('keydown', (event) => {
-    if (event.key === 'f') {
 
-        let fourmi = new Fourmi(9,9);
-        fourmis.push(fourmi);
-        console.log('Fourmi ajoutée !');
-    }
-});
 
 // Chargement.js
 var Chargement = {
@@ -135,36 +128,69 @@ var Chargement = {
         var resumeBtn = document.getElementById("resumeBtn");
         var pheromonesBtn = document.getElementById("pheromonesBtn");
 
-        if (startBtn && stopBtn && resumeBtn && pheromonesBtn) {
-            if (!this.startBtnClicked) {
-                startBtn.addEventListener("click", function () {
-                    Chargement.startTimer();
+        if (startBtn &&  pheromonesBtn) {
+            let startStopImg = document.getElementById("startStopButton");
+            startBtn.addEventListener("click", function () { //start
+                if(!Chargement.startBtnClicked) {
                     Chargement.startGame();
-                    Chargement.placeRandomImages(labyrinthe);
-                    startBtn.disabled = true;
-                    stopBtn.disabled = false;
-                    resumeBtn.disabled = true;
-                    Chargement.pheromonesActivated = true;
-                });
-                this.startBtnClicked = true;
-            }
-
-            stopBtn.addEventListener("click", function () {
-                Chargement.stopTimer();
-                Chargement.toggleButtons(stopBtn, resumeBtn);
-                pheromonesBtn.disabled = true;
+                    Chargement.startBtnClicked = true;
+                    Chargement.togglePause = true;
+                    app.isRunning = true;
+                    startStopImg.src = "../../ressources/images/stop.png";
+                }
+                else if(Chargement.togglePause) //stop
+                {
+                    Chargement.stopTimer();
+                    app.isRunning = false;
+                    Chargement.togglePause = false;
+                    startStopImg.src = "../../ressources/images/start.png";
+                }
+                else //resume
+                {
+                    Chargement.resumeTimer();
+                    app.isRunning = true;
+                    Chargement.togglePause = true;
+                    startStopImg.src = "../../ressources/images/stop.png";
+                }
+                //Chargement.placeRandomImages(labyrinthe);
+                // startBtn.disabled = true;
+                // stopBtn.disabled = false;
+                // resumeBtn.disabled = true;
+                // Chargement.pheromonesActivated = true;
             });
 
-            resumeBtn.addEventListener("click", function () {
-                Chargement.resumeTimer();
-                Chargement.toggleButtons(resumeBtn, stopBtn);
-                pheromonesBtn.disabled = !Chargement.hasPlacedImages();
-            });
 
+
+            // stopBtn.addEventListener("click", function () {
+            //
+            //     // Chargement.toggleButtons(stopBtn, resumeBtn);
+            //     pheromonesBtn.disabled = true;
+            //
+            //
+            // });
+
+            // resumeBtn.addEventListener("click", function () {
+            //     Chargement.resumeTimer();
+            //     // Chargement.toggleButtons(resumeBtn, stopBtn);
+            //     // pheromonesBtn.disabled = !Chargement.hasPlacedImages();
+            // });
+
+            Chargement.pheromoneMode = 0; //0 no display, 1 graphic, 2 numeric
             pheromonesBtn.addEventListener("click", function () {
-                if (Chargement.pheromonesActivated) {
-                    Chargement.activatePheromones(labyrinthe);
-                    pheromonesBtn.disabled = true;
+                let pheromoneImg = document.getElementById("pheromoneButton");
+                if (Chargement.pheromoneMode === 0) {
+                    pheromoneImg.src = "../../ressources/images/digits.png";
+                    Chargement.pheromoneMode = 1;
+                }
+                else if(Chargement.pheromoneMode === 1)
+                {
+                    pheromoneImg.src = "../../ressources/images/erase.png";
+                    Chargement.pheromoneMode = 2;
+                }
+                else
+                {
+                    pheromoneImg.src = "../../ressources/images/pheromone.png";
+                    Chargement.pheromoneMode = 0;
                 }
             });
         }
@@ -188,30 +214,35 @@ var Chargement = {
         app.view.foodLayer.drawFoods(foods);
         // Speed du tableau
         setInterval(() => {
-            for (let fourmi of fourmis) {
-                if(fourmi.isAtCenter()){
-                    fourmi.checkObjective(app.cellGrid[fourmi.y][fourmi.x]);
-                    if (fourmi.carrying === 0) {
-                        fourmi.moveToward(fourmi.chose(fourmi.scanArea(app.cellGrid)));
-                    } else {
-                        if(fourmi.isAtCenter()
-                            && fourmi.x === fourmi.goHome().x
-                            && fourmi.y === fourmi.goHome().y)
-                        {
-                            fourmi.nextCellToHome()
+            if(app.isRunning)
+            {
+                for (let fourmi of fourmis) {
+                    if(fourmi.isAtCenter()){
+                        fourmi.checkObjective(app.cellGrid[fourmi.y][fourmi.x]);
+                        if (fourmi.carrying === 0) {
+                            fourmi.moveToward(fourmi.chose(fourmi.scanArea(app.cellGrid)));
+                        } else {
+                            if(fourmi.isAtCenter()
+                                && fourmi.x === fourmi.goHome().x
+                                && fourmi.y === fourmi.goHome().y)
+                            {
+                                fourmi.nextCellToHome()
+                            }
+                            fourmi.moveToward(fourmi.goHome())
                         }
-                        fourmi.moveToward(fourmi.goHome())
                     }
-                }
-                else
-                {
-                    fourmi.move()
-                }
+                    else
+                    {
+                        fourmi.move()
+                    }
 
+                }
+                app.view.antLayer.drawAnts(fourmis);
+
+                app.view.pheromonesLayer.drawPheromones(app.cellGrid, Chargement.pheromoneMode);
+
+                app.model.decrementPheromones(app.cellGrid, 0.00001);
             }
-            app.view.antLayer.drawAnts(fourmis);
-            app.view.pheromonesLayer.drawPheromones(app.cellGrid);
-            app.model.decrementPheromones(app.cellGrid, 0.00001);
         }, simulationSpeed);
     },
 

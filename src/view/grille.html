@@ -35,18 +35,17 @@
                       <img src="../../ressources/images/Antgame.png">
                   </div>
 
-                  <div>
-                      <div>
-                          <button type="button" id="startBtn">Start</button>
-                          <button type="button" id="stopBtn"  onclick="stopCounter()">Stop</button>
-                          <button type="button" id="resumeBtn" onclick="resumeCounter()">Reprendre</button>
+                  <div id="buttons">
+                      <div id="small_buttons">
+                          <button type="button" id="startBtn"><img id="startStopButton" src="../../ressources/images/start.png"></button>
+                          <button type="button" id="pheromonesBtn"><img id="pheromoneButton" src="../../ressources/images/pheromone.png"></button>
                       </div>
-                      <button type="button" id="pheromonesBtn" onclick="activatePheromones()">Active phéromones</button>
+
                   </div>
                   <table id="editableTable">
                       <tr>
-                          <th>Titres</th>
-                          <th>Valeurs</th>
+                          <th>Paramètres de la simulation</th>
+                          <th></th>
                       </tr>
                       <tr>
                           <td>Nombre de fourmis</td>
