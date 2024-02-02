@@ -23,7 +23,7 @@ class Fourmi {
             if(foodCell.quantity === 0){
                 this.model.cellGrid[foodCell.y][foodCell.x] = new Free(foodCell.x, foodCell.y);
                 this.model.foods = this.model.foods.filter(food => food !== foodCell);
-                this.deleteAllPheromones(this.path);
+                //this.deleteAllPheromones(this.path);
                 this.lastfood = true;
             }
             this.model.getFoodLayer().drawFoods(this.model.foods);
@@ -82,8 +82,8 @@ class Fourmi {
             let lastFourCells = this.path.slice(-4);
             if (lastFourCells[0].x === lastFourCells[2].x && lastFourCells[0].y === lastFourCells[2].y &&
                 lastFourCells[1].x === lastFourCells[3].x && lastFourCells[1].y === lastFourCells[3].y) {
-                this.deletePheromones(lastFourCells[0]);
-                this.deletePheromones(lastFourCells[1]);
+                // this.deletePheromones(lastFourCells[0]);
+                // this.deletePheromones(lastFourCells[1]);
             }
         }
 
