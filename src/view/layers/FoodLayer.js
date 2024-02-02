@@ -30,7 +30,7 @@ class FoodLayer {
         }
 
         // Mélanger les positions disponibles
-        availablePositions = shuffleArray(availablePositions);
+        availablePositions = app.model.shuffleArray(availablePositions);
         // Placer les images sur les positions aléatoires
         let foodsGenerated = []
         for (var i = 0; i < Math.min(nbFood, availablePositions.length); i++) {

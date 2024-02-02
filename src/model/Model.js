@@ -1,6 +1,10 @@
 class Model {
     constructor() {
         this.URL = 'https://api.chucknorris.io/jokes/random';
+        this.timerInterval = null;
+        this.seconds = 0;
+        this.minutes = 0;
+        this.startBtnClicked = false;
     }
 
     // Binding.
@@ -38,6 +42,137 @@ class Model {
                 }
             }
         }
+    }
+
+    startGame() {
+        // Récupérer les valeurs éditables du tableau
+        const numberOfAnts = parseInt(document.querySelector('#editableTable tr:nth-child(2) td:last-child').innerText, 10) || 0;
+        const numberOfFoods = parseInt(document.querySelector('#editableTable tr:nth-child(3) td:last-child').innerText, 10) || 0;
+        const simulationSpeed = parseInt(document.querySelector('#editableTable tr:nth-child(4) td:last-child').innerText, 10) || 0;
+
+        // Démarrer le timer et le reste du jeu
+        this.startTimer();
+        // Fourmis du tableau
+        for (let i = 0; i < numberOfAnts; i++) {
+            let ant = new Fourmi(9, 9);
+            fourmis.push(ant);
+        }
+        // Food du tableau
+        foods = app.view.foodLayer.generateFood(numberOfFoods, app.cellGrid[9][9]);
+        app.view.foodLayer.drawFoods(foods);
+        // Speed du tableau
+        setInterval(() => {
+            if(app.isRunning)
+            {
+                for (let fourmi of fourmis) {
+                    if(fourmi.isAtCenter()){
+                        fourmi.checkObjective(app.cellGrid[fourmi.y][fourmi.x]);
+                        if (fourmi.carrying === 0) {
+                            fourmi.moveToward(fourmi.chose(fourmi.scanArea(app.cellGrid)));
+                        } else {
+                            if(fourmi.isAtCenter()
+                                && fourmi.x === fourmi.goHome().x
+                                && fourmi.y === fourmi.goHome().y)
+                            {
+                                fourmi.nextCellToHome()
+                            }
+                            fourmi.moveToward(fourmi.goHome())
+                        }
+                    }
+                    else
+                    {
+                        fourmi.move()
+                    }
+
+                }
+                app.view.antLayer.drawAnts(fourmis);
+
+                app.view.pheromonesLayer.drawPheromones(app.cellGrid, this.pheromoneMode);
+
+                app.model.decrementPheromones(app.cellGrid, 0.0005);
+            }
+        }, simulationSpeed);
+    }
+
+    stopTimer() {
+        clearInterval(this.timerInterval);
+    }
+
+    startTimer() {
+        this.timerInterval = setInterval(function () {
+            this.seconds++;
+            if (this.seconds === 60) {
+                this.seconds = 0;
+                this.minutes++;
+            }
+
+            let timerElement = document.getElementById("timer");
+            if (timerElement) {
+                timerElement.innerText = (this.minutes < 10 ? "0" : "") + this.minutes + ":" +
+                    (this.seconds < 10 ? "0" : "") + this.seconds;
+            }
+        }, 1000);
+    }
+
+    loadImages () {
+        let startBtn = document.getElementById("startBtn");
+        let pheromonesBtn = document.getElementById("pheromonesBtn");
+
+        if (startBtn &&  pheromonesBtn) {
+            let startStopImg = document.getElementById("startStopButton");
+            startBtn.addEventListener("click", function () { //start
+                if(!this.startBtnClicked) {
+                    app.model.startGame();
+                    this.startBtnClicked = true;
+                    this.togglePause = true;
+                    app.isRunning = true;
+                    startStopImg.src = "../../ressources/images/stop.png";
+                }
+                else if(this.togglePause) //stop
+                {
+                    app.model.stopTimer();
+                    app.isRunning = false;
+                    this.togglePause = false;
+                    startStopImg.src = "../../ressources/images/start.png";
+                }
+                else //resume
+                {
+                    app.model.startTimer();
+                    app.isRunning = true;
+                    this.togglePause = true;
+                    startStopImg.src = "../../ressources/images/stop.png";
+                }
+            });
+
+            this.pheromoneMode = 0;
+            pheromonesBtn.addEventListener("click", function () {
+                let pheromoneImg = document.getElementById("pheromoneButton");
+                if (this.pheromoneMode === 0) {
+                    pheromoneImg.src = "../../ressources/images/digits.png";
+                    this.pheromoneMode = 1;
+                }
+                else if(this.pheromoneMode === 1)
+                {
+                    pheromoneImg.src = "../../ressources/images/erase.png";
+                    this.pheromoneMode = 2;
+                }
+                else
+                {
+                    pheromoneImg.src = "../../ressources/images/pheromone.png";
+                    this.pheromoneMode = 0;
+                }
+            });
+        }
+    }
+
+    shuffleArray(array) {
+        for (var i = array.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+        return array;
     }
 
 }

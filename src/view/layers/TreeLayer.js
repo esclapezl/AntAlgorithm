@@ -7,7 +7,6 @@ class TreeLayer {
         this.treeImage = new Image();
         this.treeImage.src = '../../ressources/images/shadow.png';
         this.treeImage.onload = () => {
-            //console.log("Image loaded");
             this.display();
         };
         this.grid = [
@@ -35,97 +34,68 @@ class TreeLayer {
     init() {
         this.canvas.width = 755;
         this.canvas.height = 870;
+        this.cellWidth = 130;
+        this.cellHeight = 150;
+        this.indiceSprite = 0;
+        this.spacingFactor = 0.31;
     }
 
     display() {
-        const cellWidth = 130;
-        const cellHeight = 150;
-        const indiceSprite = 0;
-        const spacingFactor = 0.31;
-
-        // Charger l'image à superposer
-        const overlayImage = new Image();
+        let overlayImage = new Image();
         overlayImage.src = '../../ressources/images/tree.png';
-
-        // Attendre le chargement de l'image
         overlayImage.onload = () => {
 
             for (let i = 0; i < this.grid.length; i++) {
                 for (let j = 0; j < this.grid[0].length; j++) {
-                    // Convertir les coordonnées à virgule en entiers
-                    const x = Math.floor(j * cellWidth * spacingFactor);
-                    const y = Math.floor(i * cellHeight * spacingFactor);
+                    let x = Math.floor(j * this.cellWidth * this.spacingFactor);
+                    let y = Math.floor(i * this.cellHeight * this.spacingFactor);
 
                     if (this.grid[i][j] === 1) {
                         this.ctx.save();
-
                         this.ctx.translate(x, y);
-
-                        const scaleRatio = 0.45;
+                        let scaleRatio = 0.45;
                         this.ctx.scale(scaleRatio, scaleRatio);
 
                         this.ctx.drawImage(
                             this.treeImage,
-                            indiceSprite * cellWidth, 0,
-                            cellWidth, cellHeight,
+                            this.indiceSprite * this.cellWidth, 0,
+                            this.cellWidth, this.cellHeight,
                             0, 0,
-                            cellWidth, cellHeight
+                            this.cellWidth, this.cellHeight
                         );
 
-                        // Dessiner l'image à superposer (overlay)
                         this.ctx.drawImage(
                             overlayImage,
-                            indiceSprite * cellWidth,
+                            this.indiceSprite * this.cellWidth,
                             0,
-                            cellWidth,
-                            cellHeight,
+                            this.cellWidth,
+                            this.cellHeight,
                             0,
                             0,
-                            cellWidth,
-                            cellHeight
+                            this.cellWidth,
+                            this.cellHeight
                         );
 
                         this.ctx.restore();
                     } else if (i === 9 && j === 9) {
-                        // Instancier un objet de type Fourmiliere
-                        const fourmiliere = new Fourmiliere(x, y);
-                        //console.log(`Fourmiliere created at grid position (${i}, ${j})`); // Position par rapport au grid
-                        // Afficher l'objet Fourmiliere
-                        this.displayCell(fourmiliere);
-
-                        const centerX = this.canvas.width / 2;
-                        const centerY = this.canvas.height / 2;
-
-                        const newX = centerX - (cellWidth * spacingFactor * 0.01);
-                        const newY = centerY - (cellHeight * spacingFactor * 0.01) + (cellHeight * spacingFactor) / 2;
-
-                        const newTreeImage = new Image();
+                        let newTreeImage = new Image();
                         newTreeImage.src = '../../ressources/images/fourmiliere.png';
                         newTreeImage.onload = () => {
                             const scaleRatioFourmiliere = 0.20;
                             this.ctx.save();
                             this.ctx.scale(scaleRatioFourmiliere, scaleRatioFourmiliere);
-                            this.ctx.drawImage(newTreeImage, newX / scaleRatioFourmiliere, newY / scaleRatioFourmiliere - newTreeImage.height, cellWidth, cellHeight);
+                            this.ctx.drawImage(newTreeImage,
+                                (this.canvas.width / 2 - (this.cellWidth * this.spacingFactor * 0.01) + (this.cellWidth * this.spacingFactor) / 5) / scaleRatioFourmiliere,
+                                (this.canvas.height / 2 - (this.cellHeight * this.spacingFactor * 0.01) + (this.cellHeight * this.spacingFactor) / 5) / scaleRatioFourmiliere,
+                                this.cellWidth,
+                                this.cellHeight);
                             this.ctx.restore();
                         };
-                    } else if (this.grid[i][j] === 0) {
-                        const freeCell = new Free(x, y, 1);
-                        this.displayCell(freeCell);
                     }
                 }
             }
         }
     }
-
-
-
-    displayCell(cell) {
-        //console.log(`Cell at (${cell.x}, ${cell.y}) created with type: ${cell.GetType()}`); // Position en pixel du canva
-        if (cell instanceof Free) {
-            //console.log(`Quantity: ${cell.GetQty()}`);
-        }
-    }
-
 }
 
 

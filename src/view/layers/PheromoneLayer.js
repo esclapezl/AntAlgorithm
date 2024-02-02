@@ -40,8 +40,7 @@ class PheromoneLayer {
                             let colorValue = Math.max(0, 255- Math.round((cell.pheromone / max) * 255));
                             this.ctx.fillStyle = `rgb(255, ${colorValue}, ${colorValue})`;
 
-                            // Dessiner un cercle proportionnel à la quantité de phéromones
-                            let radius = (Math.min(cell.pheromone + min,max)*10 /max);
+                            let radius = 1+Math.log(Math.max(cell.pheromone + min, 1)) * 10;
                             this.ctx.beginPath();
                             this.ctx.arc(
                                 x * this.cellWidth * this.spacingFactor + this.cellWidth / 4, // Position x du centre du cercle

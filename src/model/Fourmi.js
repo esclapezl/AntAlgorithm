@@ -10,6 +10,7 @@ class Fourmi {
         this.direction = 0; //0:left 1:up 2:right 3:down
         this.speed = 0.05; // divise 0.5
         this.probExploration = 0.4;
+        this.lastfood = false;
     }
 
     pickUp(foodCell) {
@@ -22,6 +23,7 @@ class Fourmi {
                 app.cellGrid[foodCell.y][foodCell.x] = new Free(foodCell.x, foodCell.y);
                 foods = foods.filter(food => food !== foodCell);
                 this.deleteAllPheromones(this.path);
+                this.lastfood = true;
             }
             app.view.foodLayer.drawFoods(foods);
             this.pathToHome = this.dijkstra()
@@ -32,7 +34,12 @@ class Fourmi {
 
     dropOff(startingPoint) {
         this.carrying = 0;
-        this.layPheromones(5,this.path);
+        if(!this.lastfood) {
+            this.layPheromones(5,this.path);
+        } else {
+            this.lastfood = false;
+        }
+
         this.path = [];
         this.pathToHome = [];
     }
@@ -232,7 +239,7 @@ class Fourmi {
         let pheromoneFraction = quantity / path.length;
         for (let cell of path) {
             app.cellGrid[cell.y][cell.x].pheromone += pheromoneFraction;
-            pheromoneFraction *= 0.9;
+            pheromoneFraction *= 0.95;
         }
     }
 
