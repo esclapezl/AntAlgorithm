@@ -16,33 +16,6 @@ class FoodLayer {
         this.spacingFactor = 0.31;
     }
 
-    generateFood(nbFood, fourmiliere) {
-        let availablePositions = [];
-        let fourmilierePosition = { x: fourmiliere.x, y: fourmiliere.y }; // Remplacez par la position réelle de la fourmilière
-
-        // Collecter toutes les positions disponibles
-        for (let y = 0; y < this.view.getGrid().length; y++) {
-            for (let x = 0; x < this.view.getGrid()[y].length; x++) {
-                // Vérifier si la position est à une distance de plus d'une case de la fourmilière
-                if (this.view.getGrid()[y][x] === 0 && Math.abs(x - fourmilierePosition.x) > 1 && Math.abs(y - fourmilierePosition.y) > 1) {
-                    availablePositions.push({ x: x, y: y });
-                }
-            }
-        }
-
-        // Mélanger les positions disponibles
-        availablePositions = app.model.shuffleArray(availablePositions);
-        // Placer les images sur les positions aléatoires
-        let foodsGenerated = []
-        for (let i = 0; i < Math.min(nbFood, availablePositions.length); i++) {
-            let foodPos = availablePositions.shift();
-            let food = new Food(foodPos.x, foodPos.y, 1);
-            this.view.getCellGrid()[food.y][food.x] = food;
-            foodsGenerated.push(food);
-        }
-        return foodsGenerated;
-    }
-
     drawFoods(foods){
         this.view.foodsCtx.clearRect(0, 0, this.view.foodsCanvas.width, this.view.foodsCanvas.height);
         for (let food of foods) {
