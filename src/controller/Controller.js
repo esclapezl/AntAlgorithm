@@ -55,6 +55,5 @@ class Controller {
 
 const app = new Controller(new Model(), new View());
 document.addEventListener('DOMContentLoaded', function () {
-    app.view.init();
     app.model.loadImages(app.view.treeLayer);
 });
